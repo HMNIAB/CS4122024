@@ -2,21 +2,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Controller {
-    View view;
+    GameWindow gameWindow;
     ClientNetwork clientNetwork;
 
     public Controller() {
         clientNetwork = new ClientNetwork();
-        view = new View();
+        gameWindow = new GameWindow();
 
-        view.getGameWindow().addCoinFlipActionListener(new CoinFlipActionListener());
+        gameWindow.addCoinFlipActionListener(new CoinFlipActionListener());
+        gameWindow.open();
+
+        // TODO: restructure when gameWindow construction/opening happens when more windows are implemented
     }
 
     public class CoinFlipActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             clientNetwork.sendRequest("FLIP");
-            view.getGameWindow().setResultText(clientNetwork.getResponse());
+            gameWindow.setResultText(clientNetwork.getResponse());
         }
     }
 }
