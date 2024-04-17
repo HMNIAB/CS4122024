@@ -10,6 +10,9 @@ public class Controller {
         gameWindow = new GameWindow();
 
         gameWindow.addCoinFlipActionListener(new CoinFlipActionListener());
+        // TODO: get username and score from server instead of defaults
+        gameWindow.setUsernameText("user");
+        gameWindow.setScoreText(10);
         gameWindow.open();
 
         // TODO: restructure when gameWindow construction/opening happens when more windows are implemented
