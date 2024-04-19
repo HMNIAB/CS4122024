@@ -68,7 +68,7 @@ public class Controller {
             }
 
             String request = String.format("LOGIN %s %s", loginWindow.getUsername(),
-                    Arrays.toString(loginWindow.getPassword()));
+                    new String(loginWindow.getPassword()));
             clientNetwork.sendRequest(request);
 
             String response = clientNetwork.getResponse();
@@ -96,7 +96,7 @@ public class Controller {
             }
 
             String request = String.format("CREATE %s %s", loginWindow.getUsername(),
-                    Arrays.toString(loginWindow.getPassword()));
+                    new String(loginWindow.getPassword()));
             clientNetwork.sendRequest(request);
 
             String response = clientNetwork.getResponse();
