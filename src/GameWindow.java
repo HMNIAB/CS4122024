@@ -3,13 +3,17 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class GameWindow {
+    private User user;
+
     private JFrame jFrame;
     private JButton coinFlipButton;
     private JLabel resultText;
     private JLabel scoreText;
     private JLabel usernameText;
 
-    public GameWindow() {
+    public GameWindow(User user) {
+        this.user = user;
+
         jFrame = new JFrame();
 
         JPanel gamePanel = constructGamePanel();
@@ -19,6 +23,7 @@ public class GameWindow {
         jFrame.getContentPane().add(BorderLayout.CENTER, gamePanel);
 
         jFrame.setSize(600, 500);
+        jFrame.setVisible(true);
     }
 
     private JPanel constructGamePanel() {
@@ -36,8 +41,8 @@ public class GameWindow {
     }
 
     private JPanel constructInfoPanel() {
-        usernameText = new JLabel();
-        scoreText = new JLabel();
+        usernameText = new JLabel(user.getUsername());
+        scoreText = new JLabel(String.valueOf(user.getScore()));
 
         JPanel jPanel = new JPanel();
         jPanel.setLayout(new GridLayout(1,2));
@@ -46,10 +51,6 @@ public class GameWindow {
 
         jPanel.setSize(600, 50);
         return jPanel;
-    }
-
-    public void open() {
-        jFrame.setVisible(true);
     }
 
     public void setResultText(String text) {
