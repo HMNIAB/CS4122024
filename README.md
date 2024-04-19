@@ -22,48 +22,48 @@ Avery Beauter & Sloane Vaznis
   <tr>
     <td></td>
     <td>Check Balance</td>
-    <td>Not Started</td>
-    <td>False</td>
+    <td>🚫</td>
+    <td>❌</td>
     <td></td>
     <td></td>
   </tr>
   <tr>
     <td></td>
     <td>Wager Valid</td>
-    <td>Not Started</td>
-    <td>False</td>
+    <td>🚫</td>
+    <td>❌</td>
     <td></td>
     <td></td>
   </tr>
   <tr>
     <td></td>
     <td>Update Wager</td>
-    <td>Not Started</td>
-    <td>False</td>
+    <td>🚫</td>
+    <td>❌</td>
     <td></td>
     <td></td>
   </tr>
   <tr>
     <td></td>
     <td>Flip Coin</td>
-    <td>Not Started</td>
-    <td>False</td>
+    <td>🚫</td>
+    <td>❌</td>
     <td></td>
     <td></td>
   </tr>
   <tr>
     <td></td>
     <td>Report Results</td>
-    <td>Not Started</td>
-    <td>False</td>
+    <td>🚫</td>
+    <td>❌</td>
     <td></td>
     <td></td>
   </tr>
   <tr>
     <td></td>
     <td>Send Notification</td>
-    <td>Not Started</td>
-    <td>False</td>
+    <td>🚫</td>
+    <td>❌</td>
     <td></td>
     <td></td>
   </tr>
@@ -79,24 +79,24 @@ Avery Beauter & Sloane Vaznis
   <tr>
     <td></td>
     <td>Send Account Info</td>
-    <td>In-Progress</td>
-    <td>False</td>
+    <td>🚧</td>
+    <td>❌</td>
     <td></td>
     <td></td>
   </tr>
   <tr>
     <td></td>
     <td>Set Wager</td>
-    <td>Not Started</td>
-    <td>False</td>
+    <td>🚫</td>
+    <td>❌</td>
     <td></td>
     <td></td>
   </tr>
   <tr>
     <td></td>
     <td>Coin-Flip Button</td>
-    <td>In-Progress</td>
-    <td>False</td>
+    <td>🚧</td>
+    <td>❌</td>
     <td></td>
     <td></td>
   </tr>
@@ -111,56 +111,56 @@ Avery Beauter & Sloane Vaznis
   <tr>
     <td></td>
     <td>Incorrect Login</td>
-    <td>In-Progress</td>
-    <td>False</td>
+    <td>🚧</td>
+    <td>❌</td>
     <td></td>
     <td></td>
   </tr>
   <tr>
     <td></td>
     <td>Account Exists</td>
-    <td>In-Progress</td>
-    <td>False</td>
+    <td>🚧</td>
+    <td>❌</td>
     <td></td>
     <td></td>
   </tr>
   <tr>
     <td></td>
     <td>Login</td>
-    <td>In-Progress</td>
-    <td>False</td>
+    <td>🚧</td>
+    <td>❌</td>
     <td></td>
     <td></td>
   </tr>
   <tr>
     <td></td>
     <td>Create Account</td>
-    <td>In-Progress</td>
-    <td>False</td>
+    <td>🚧</td>
+    <td>❌</td>
     <td></td>
     <td></td>
   </tr>
   <tr>
     <td></td>
     <td>Update Info</td>
-    <td>In-Progress</td>
-    <td>False</td>
+    <td>🚧</td>
+    <td>❌</td>
     <td></td>
     <td></td>
   </tr>
   <tr>
     <td></td>
     <td>Update Leaderboard</td>
-    <td>In-Progress</td>
-    <td>False</td>
+    <td>🚧</td>
+    <td>❌</td>
     <td></td>
     <td></td>
   </tr>
   <tr>
     <td></td>
     <td>Send Notification</td>
-    <td>In-Progress</td>
-    <td>False</td>
+    <td>🚧</td>
+    <td>❌</td>
     <td></td>
     <td></td>
   </tr>
