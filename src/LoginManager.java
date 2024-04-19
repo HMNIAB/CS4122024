@@ -16,7 +16,7 @@ public class LoginManager {
     public boolean createAccount(String username, String password) {
         if (database.userExists(username)) return false;
         else {
-            database.insertUser(username, password, 0, 0);
+            database.insertUser(username, password, 0);
             return true;
         }
     }

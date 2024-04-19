@@ -21,7 +21,7 @@ public class UserDatabase {
         String createTableSQL = "CREATE TABLE IF NOT EXISTS users (" +
                                 "username TEXT PRIMARY KEY," +
                                 "password TEXT NOT NULL," +
-                                "score INTEGER DEFAULT 10,";
+                                "score INTEGER DEFAULT 10);";
         try {
             Statement statement = connection.createStatement();
             statement.execute(createTableSQL);
