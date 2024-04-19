@@ -32,16 +32,16 @@ Sloane Vaznis & Avery Beauter
     <td></td>
     <td>Wager Valid</td>
     <td>🚫</td>
-    <td>❌</td>
-    <td></td>
+    <td>🚧</td>
+    <td>Sloane</td>
     <td></td>
   </tr>
   <tr>
     <td></td>
     <td>Update Wager</td>
     <td>🚫</td>
-    <td>❌</td>
-    <td></td>
+    <td>🚧</td>
+    <td>Sloane</td>
     <td></td>
   </tr>
   <tr>
@@ -89,8 +89,8 @@ Sloane Vaznis & Avery Beauter
     <td></td>
     <td>Set Wager</td>
     <td>🚫</td>
-    <td>❌</td>
-    <td></td>
+    <td>🚧</td>
+    <td>Sloane</td>
     <td></td>
   </tr>
   <tr>
