@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
@@ -10,6 +11,8 @@ public class GameWindow {
     private JLabel resultText;
     private JLabel scoreText;
     private JLabel usernameText;
+    private WagerField wagerField;
+    private ButtonGroup buttonGroup;
 
     public GameWindow(User user) {
         this.user = user;
@@ -18,9 +21,11 @@ public class GameWindow {
 
         JPanel gamePanel = constructGamePanel();
         JPanel infoPanel = constructInfoPanel();
+        JPanel wagerPanel = constructWagerPanel();
 
         jFrame.getContentPane().add(BorderLayout.NORTH, infoPanel);
         jFrame.getContentPane().add(BorderLayout.CENTER, gamePanel);
+        jFrame.getContentPane().add(BorderLayout.WEST, wagerPanel);
 
         jFrame.setSize(600, 500);
         jFrame.setVisible(true);
@@ -51,6 +56,43 @@ public class GameWindow {
 
         jPanel.setSize(600, 50);
         return jPanel;
+    }
+
+    private JPanel constructWagerPanel() {
+        JPanel wagerPanel = new JPanel();
+        wagerPanel.setBorder(new TitledBorder("Wager"));
+        wagerPanel.setLayout(new GridLayout(2, 2));
+
+        JLabel wagerLabel = new JLabel("Call:");
+        JLabel amountLabel = new JLabel("Amount:");
+
+        JPanel buttonsPanel = constructButtonsPanel();
+        wagerField = new WagerField();
+
+        wagerPanel.add(wagerLabel);
+        wagerPanel.add(buttonsPanel);
+        wagerPanel.add(amountLabel);
+        wagerPanel.add(wagerField);
+
+        return wagerPanel;
+    }
+
+    private JPanel constructButtonsPanel() {
+        JPanel buttonsPanel = new JPanel();
+        buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.PAGE_AXIS));
+
+        buttonGroup = new ButtonGroup();
+        JRadioButton headsButton = new JRadioButton("Heads");
+        JRadioButton tailsButton = new JRadioButton("Tails");
+        headsButton.setSelected(true);
+
+        buttonGroup.add(headsButton);
+        buttonGroup.add(tailsButton);
+
+        buttonsPanel.add(headsButton);
+        buttonsPanel.add(tailsButton);
+
+        return buttonsPanel;
     }
 
     public void setResultText(String text) {
