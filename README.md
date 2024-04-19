@@ -1,35 +1,167 @@
 # CS4122024
 A repository for the CS412 final project 
 Avery Beauter & Sloane Vaznis
-==============================================
-<br> 
-TODO GAME: 
-<ul>
-  <li>Check Balance     -> Not Started</li>
-  <li>Wager Valid       -> Not Started</li>
-  <li>Update Wager      -> Not Started</li>
-  <li>Flip Coin         -> Not Started</li>
-  <li>Report Results    -> Not Started</li>
-  <li>Send Notification -> Not Started</li>
-</ul>
-==============================================
 <br>
-TODO USER: 
-<ul>
-  <li>Send Account Info -> In-Progress</li>
-  <li>Set Wager         -> Not Started</li>
-  <li>Coin Flip Button  -> In-Progress</li>
-</ul>
-==============================================
-<br>
-TODO ACCOUNT MANAGER: 
-<ul>
-  <li>Incorrect Login    -> In-Progress</li>
-  <li>Account Exists     -> In-Progress</li>
-  <li>Login              -> In-Progress</li>
-  <li>Create Account     -> In-Progress</li>
-  <li>Update Info        -> Not Started</li>
-  <li>Update Leaderboard -> Not Started</li>
-  <li>Send Notification  -> In-Progress</li>
-</ul>
-==============================================
+<table>
+  <tr>
+    <th>MODULE</th>
+    <th>SUB-MODULE</th>
+    <th>STATUS</th>
+    <th>TESTED</th>
+    <th>ASSIGNED</th>
+    <th>ADDITIONAL COMMENTS</th>
+  </tr>
+  <tr>
+    <td>GAME</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Check Balance</td>
+    <td>Not Started</td>
+    <td>False</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Wager Valid</td>
+    <td>Not Started</td>
+    <td>False</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Update Wager</td>
+    <td>Not Started</td>
+    <td>False</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Flip Coin</td>
+    <td>Not Started</td>
+    <td>False</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Report Results</td>
+    <td>Not Started</td>
+    <td>False</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Send Notification</td>
+    <td>Not Started</td>
+    <td>False</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <tr>
+      <td>USER</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  <tr>
+    <td></td>
+    <td>Send Account Info</td>
+    <td>In-Progress</td>
+    <td>False</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Set Wager</td>
+    <td>Not Started</td>
+    <td>False</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Coin-Flip Button</td>
+    <td>In-Progress</td>
+    <td>False</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>ACCOUNT MANAGER</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Incorrect Login</td>
+    <td>In-Progress</td>
+    <td>False</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Account Exists</td>
+    <td>In-Progress</td>
+    <td>False</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Login</td>
+    <td>In-Progress</td>
+    <td>False</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Create Account</td>
+    <td>In-Progress</td>
+    <td>False</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Update Info</td>
+    <td>In-Progress</td>
+    <td>False</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Update Leaderboard</td>
+    <td>In-Progress</td>
+    <td>False</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Send Notification</td>
+    <td>In-Progress</td>
+    <td>False</td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
