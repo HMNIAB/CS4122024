@@ -21,11 +21,20 @@ public class ServerThread implements Runnable {
 
             String input;
             while((input = bufferedReader.readLine()) != null) {
+                String response = null;
                 if(input.equals("FLIP")) {
-                    String result = CoinFlipGame.flipCoin();
-                    printWriter.println(result);
-                    printWriter.flush();
+                    response = CoinFlipGame.flipCoin();
                 }
+                else {
+                    String[] splitInput = input.split(" ");
+                    if(splitInput[0].equals("LOGIN")) {
+                        response = Server.login(splitInput);
+                    } else if (splitInput[0].equals("CREATE")) {
+                        response = Server.createAccount(splitInput);
+                    }
+                }
+                printWriter.println(response);
+                printWriter.flush();
             }
         } catch (IOException ex) {
             ex.printStackTrace();
