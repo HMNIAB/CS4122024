@@ -5,12 +5,12 @@ Avery Beauter & Sloane Vaznis
 <br> 
 TODO GAME: 
 <ul>
-  <li>Check Balance</li>
-  <li>Wager Valid</li>
-  <li>Update Wager</li>
-  <li>Flip Coin</li>
-  <li>Report Results</li>
-  <li>Send Notification</li>
+  <li>Check Balance     -> Not Started</li>
+  <li>Wager Valid       -> Not Started</li>
+  <li>Update Wager      -> Not Started</li>
+  <li>Flip Coin         -> Not Started</li>
+  <li>Report Results    -> Not Started</li>
+  <li>Send Notification -> Not Started</li>
 </ul>
 ==============================================
 <br>
