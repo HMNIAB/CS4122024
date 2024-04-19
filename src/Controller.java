@@ -7,6 +7,7 @@ public class Controller {
     private GameWindow gameWindow;
     private LoginWindow loginWindow;
     private ClientNetwork clientNetwork;
+    private User user;
 
     public Controller() {
         clientNetwork = new ClientNetwork();
@@ -19,16 +20,42 @@ public class Controller {
         loginWindow.addCreateAccountActionListener(new CreateAccountActionListener());
     }
 
-    private void createGameWindow(User user) {
-        gameWindow = new GameWindow(user);
+    private void createGameWindow() {
+        gameWindow = new GameWindow();
+        gameWindow.setUsernameText(user.getUsername());
+        gameWindow.setScoreText(user.getScore());
         gameWindow.addCoinFlipActionListener(new CoinFlipActionListener());
     }
 
     public class CoinFlipActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            int wager = gameWindow.getWagerAmount();
+
+            if(wager > user.getScore()) {
+                JOptionPane.showMessageDialog(gameWindow,
+                        "Wager amount cannot be greater than score.");
+                return;
+            }
+
             clientNetwork.sendRequest("FLIP");
-            gameWindow.setResultText(clientNetwork.getResponse());
+            String response = clientNetwork.getResponse();
+            gameWindow.setResultText(response);
+
+            if(response.equals(gameWindow.getCall().getActionCommand())) {
+                String request = String.format("ADD %s %d", user.getUsername(), wager);
+                clientNetwork.sendRequest(request);
+            } else {
+                String request = String.format("LOSE %s %d", user.getUsername(), wager);
+                clientNetwork.sendRequest(request);
+            }
+
+            response = clientNetwork.getResponse();
+            String[] scoreResponse = response.split(" ");
+            if(scoreResponse[0].equals("SCORE")) {
+                user.setScore(Integer.parseInt(scoreResponse[1]));
+                gameWindow.setScoreText(user.getScore());
+            }
         }
     }
 
@@ -53,9 +80,9 @@ public class Controller {
                 String username = userInfo[1];
                 String password = userInfo[2];
                 int score = Integer.parseInt(userInfo[3]);
-                User user = new User(username, password, score);
+                user = new User(username, password, score);
                 loginWindow.dispose();
-                createGameWindow(user);
+                createGameWindow();
             }
         }
     }

@@ -42,4 +42,12 @@ public class Server {
             return "TRUE";
         } else return "FALSE";
     }
+
+    public static String updateScore(String username, int change) {
+        User user = database.getUser(username);
+        int newScore = user.getScore() + change;
+        database.updateScore(username, newScore);
+        String response = String.format(STR."SCORE \{newScore}");
+        return response;
+    }
 }

@@ -31,6 +31,14 @@ public class ServerThread implements Runnable {
                         response = Server.login(splitInput);
                     } else if (splitInput[0].equals("CREATE")) {
                         response = Server.createAccount(splitInput);
+                    } else if (splitInput[0].equals("ADD")) {
+                        String username = splitInput[1];
+                        int change = Integer.parseInt(splitInput[2]);
+                        response = Server.updateScore(username, change);
+                    } else if (splitInput[0].equals("LOSE")) {
+                        String username = splitInput[1];
+                        int change = Integer.parseInt(splitInput[2]) * -1;
+                        response = Server.updateScore(username, change);
                     }
                 }
                 printWriter.println(response);

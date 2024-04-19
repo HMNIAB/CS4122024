@@ -3,10 +3,8 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class GameWindow {
-    private User user;
+public class GameWindow extends JFrame {
 
-    private JFrame jFrame;
     private JButton coinFlipButton;
     private JLabel resultText;
     private JLabel scoreText;
@@ -14,21 +12,19 @@ public class GameWindow {
     private WagerField wagerField;
     private ButtonGroup buttonGroup;
 
-    public GameWindow(User user) {
-        this.user = user;
-
-        jFrame = new JFrame();
+    public GameWindow() {
+        super("Coin Flip Game");
 
         JPanel gamePanel = constructGamePanel();
         JPanel infoPanel = constructInfoPanel();
         JPanel wagerPanel = constructWagerPanel();
 
-        jFrame.getContentPane().add(BorderLayout.NORTH, infoPanel);
-        jFrame.getContentPane().add(BorderLayout.CENTER, gamePanel);
-        jFrame.getContentPane().add(BorderLayout.WEST, wagerPanel);
+        getContentPane().add(BorderLayout.NORTH, infoPanel);
+        getContentPane().add(BorderLayout.CENTER, gamePanel);
+        getContentPane().add(BorderLayout.WEST, wagerPanel);
 
-        jFrame.setSize(600, 500);
-        jFrame.setVisible(true);
+        setSize(600, 500);
+        setVisible(true);
     }
 
     private JPanel constructGamePanel() {
@@ -46,8 +42,8 @@ public class GameWindow {
     }
 
     private JPanel constructInfoPanel() {
-        usernameText = new JLabel(user.getUsername());
-        scoreText = new JLabel(STR."\{String.valueOf(user.getScore())} points");
+        usernameText = new JLabel();
+        scoreText = new JLabel();
 
         JPanel jPanel = new JPanel();
         jPanel.setLayout(new GridLayout(1,2));
@@ -83,7 +79,9 @@ public class GameWindow {
 
         buttonGroup = new ButtonGroup();
         JRadioButton headsButton = new JRadioButton("Heads");
+        headsButton.setActionCommand("HEADS");
         JRadioButton tailsButton = new JRadioButton("Tails");
+        tailsButton.setActionCommand("TAILS");
         headsButton.setSelected(true);
 
         buttonGroup.add(headsButton);
@@ -92,6 +90,10 @@ public class GameWindow {
         buttonsPanel.add(headsButton);
         buttonsPanel.add(tailsButton);
         return buttonsPanel;
+    }
+
+    public ButtonModel getCall() {
+        return buttonGroup.getSelection();
     }
 
     public int getWagerAmount() {
