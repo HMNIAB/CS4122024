@@ -21,8 +21,7 @@ public class UserDatabase {
         String createTableSQL = "CREATE TABLE IF NOT EXISTS users (" +
                                 "username TEXT PRIMARY KEY," +
                                 "password TEXT NOT NULL," +
-                                "score INTEGER DEFAULT 0," +
-                                "credit_balance INTEGER DEFAULT 0)";
+                                "score INTEGER DEFAULT 10,";
         try {
             Statement statement = connection.createStatement();
             statement.execute(createTableSQL);
@@ -33,14 +32,13 @@ public class UserDatabase {
     }
 
     // Method to insert a user
-    public void insertUser(String username, String password, int score, int creditBalance) {
-        String insertSQL = "INSERT INTO users (username, password, score, credit_balance) VALUES (?, ?, ?, ?)";
+    public void insertUser(String username, String password, int score) {
+        String insertSQL = "INSERT INTO users (username, password, score) VALUES (?, ?, ?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(insertSQL);
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, password);
             preparedStatement.setInt(3, score);
-            preparedStatement.setInt(4, creditBalance);
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException e) {
@@ -78,8 +76,7 @@ public class UserDatabase {
             while (resultSet.next()) {
                 String password = resultSet.getString("password");
                 int score = resultSet.getInt("score");
-                int creditBalance = resultSet.getInt("credit_balance");
-                user = new User(username, password, score, creditBalance);
+                user = new User(username, password, score);
             }
             resultSet.close();
             preparedStatement.close();
@@ -102,21 +99,6 @@ public class UserDatabase {
             e.printStackTrace();
         }
     }
-
-    // Method to update a user's credit balance
-    public void updateCreditBalance(String username, int newCreditBalance) {
-        String updateSQL = "UPDATE users SET credit_balance = ? WHERE username = ?";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(updateSQL);
-            preparedStatement.setInt(1, newCreditBalance);
-            preparedStatement.setString(2, username);
-            preparedStatement.executeUpdate();
-            preparedStatement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     // Method to close the database connection
     public void close() {
         try {

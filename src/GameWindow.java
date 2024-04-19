@@ -62,7 +62,7 @@ public class GameWindow {
     }
 
     public void setScoreText(int score) {
-        scoreText.setText(STR."\{String.valueOf(score)} points");
+        scoreText.setText(STR."{String.valueOf(score)} points");
     }
 
     public void addCoinFlipActionListener(ActionListener a) {

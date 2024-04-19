@@ -2,13 +2,11 @@ public class User {
     private String username;
     private String password;
     private int score;
-    private int creditBalance;
 
-    public User(String username, String password, int score, int creditBalance) {
+    public User(String username, String password, int score) {
         this.username = username;
         this.password = password;
         this.score = score;
-        this.creditBalance = creditBalance;
     }
 
     @Override
@@ -26,14 +24,6 @@ public class User {
 
     public void setScore(int score) {
         this.score = score;
-    }
-
-    public int getCreditBalance() {
-        return creditBalance;
-    }
-
-    public void setCreditBalance(int creditBalance) {
-        this.creditBalance = creditBalance;
     }
 
     public String getPassword() {

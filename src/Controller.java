@@ -53,9 +53,7 @@ public class Controller {
                 String username = userInfo[1];
                 String password = userInfo[2];
                 int score = Integer.parseInt(userInfo[3]);
-                int creditBalance = Integer.parseInt(userInfo[4]);
-                User user = new User(username, password, score, creditBalance);
-
+                User user = new User(username, password, score);
                 loginWindow.dispose();
                 createGameWindow(user);
             }
