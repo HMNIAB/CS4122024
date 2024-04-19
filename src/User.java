@@ -13,7 +13,7 @@ public class User {
 
     @Override
     public String toString() {
-        return (username + password + score + creditBalance);
+        return String.format("%s %s %d %d", username, password, score, creditBalance);
     }
 
     public String getUsername() {
