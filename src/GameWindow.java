@@ -47,7 +47,7 @@ public class GameWindow {
 
     private JPanel constructInfoPanel() {
         usernameText = new JLabel(user.getUsername());
-        scoreText = new JLabel(String.valueOf(user.getScore()));
+        scoreText = new JLabel(STR."\{String.valueOf(user.getScore())} points");
 
         JPanel jPanel = new JPanel();
         jPanel.setLayout(new GridLayout(1,2));
@@ -91,8 +91,11 @@ public class GameWindow {
 
         buttonsPanel.add(headsButton);
         buttonsPanel.add(tailsButton);
-
         return buttonsPanel;
+    }
+
+    public int getWagerAmount() {
+        return Integer.parseInt(wagerField.getText());
     }
 
     public void setResultText(String text) {
@@ -104,7 +107,7 @@ public class GameWindow {
     }
 
     public void setScoreText(int score) {
-        scoreText.setText(STR."{String.valueOf(score)} points");
+        scoreText.setText(STR."\{String.valueOf(score)} points");
     }
 
     public void addCoinFlipActionListener(ActionListener a) {
