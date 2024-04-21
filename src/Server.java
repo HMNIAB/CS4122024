@@ -11,6 +11,7 @@ public class Server {
         loginManager = new LoginManager(database);
 
         try {
+            //need to close socket somewhere - resource leak otherwise
             ServerSocket server = new ServerSocket(5000);
             System.out.println("Server established on port 5000");
             while(true) {
