@@ -154,7 +154,7 @@ Sloane Vaznis & Avery Beauter
     <td>Update Leaderboard</td>
     <td>🚧</td>
     <td>❌</td>
-    <td></td>
+    <td>Avery</td>
     <td></td>
   </tr>
   <tr>
