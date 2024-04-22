@@ -5,6 +5,10 @@ import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
 
 public class WagerField extends JTextField {
+    public WagerField() {
+        super("0");
+    }
+
     @Override
     protected Document createDefaultModel() {
         return new WagerDocument();

@@ -4,7 +4,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-public class ServerThread implements Runnable {
+public class ServerThread extends Server implements Runnable {
     private Socket clientSocket;
 
     public ServerThread(Socket clientSocket) {
@@ -21,25 +21,14 @@ public class ServerThread implements Runnable {
 
             String input;
             while((input = bufferedReader.readLine()) != null) {
-                String response = null;
+                String response;
                 if(input.equals("FLIP")) {
                     response = CoinFlipGame.flipCoin();
-                }
-                else {
+                } else if(input.equals("ROLL")) {
+                    response = DiceRollGame.rollDice();
+                } else {
                     String[] splitInput = input.split(" ");
-                    if(splitInput[0].equals("LOGIN")) {
-                        response = Server.login(splitInput);
-                    } else if (splitInput[0].equals("CREATE")) {
-                        response = Server.createAccount(splitInput);
-                    } else if (splitInput[0].equals("ADD")) {
-                        String username = splitInput[1];
-                        int change = Integer.parseInt(splitInput[2]);
-                        response = Server.updateScore(username, change);
-                    } else if (splitInput[0].equals("LOSE")) {
-                        String username = splitInput[1];
-                        int change = Integer.parseInt(splitInput[2]) * -1;
-                        response = Server.updateScore(username, change);
-                    }
+                    response = parseLongInput(splitInput);
                 }
                 printWriter.println(response);
                 printWriter.flush();
@@ -48,5 +37,35 @@ public class ServerThread implements Runnable {
             ex.printStackTrace();
         }
 
+    }
+
+    private String parseLongInput(String[] splitInput) {
+        switch(splitInput[0]) {
+            case "LOGIN":
+                User user = loginManager.login(splitInput[1], splitInput[2]);
+                if(user != null) return ("TRUE " + user);
+                else return "FALSE";
+            case "CREATE":
+                if(loginManager.createAccount(splitInput[1], splitInput[2]))
+                    return "TRUE";
+                else return "FALSE";
+            case "ADD":
+                String username = splitInput[1];
+                int change = Integer.parseInt(splitInput[2]);
+                return requestScoreUpdate(username, change);
+            case "LOSE":
+                username = splitInput[1];
+                change = -1 * (Integer.parseInt(splitInput[2]));
+                return requestScoreUpdate(username, change);
+            default:
+                return "INVALID";
+        }
+    }
+
+    private String requestScoreUpdate(String username, int change) {
+        User user = database.getUser(username);
+        int newScore = user.getScore() + change;
+        database.updateScore(username, newScore);
+        return String.format(STR."SCORE \{newScore}");
     }
 }

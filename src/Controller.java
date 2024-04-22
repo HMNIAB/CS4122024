@@ -3,7 +3,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Controller {
-    private GameWindow gameWindow;
+    private MainWindow mainWindow;
     private LoginWindow loginWindow;
     private ClientNetwork clientNetwork;
     private User user;
@@ -20,40 +20,63 @@ public class Controller {
     }
 
     private void createGameWindow() {
-        gameWindow = new GameWindow();
-        gameWindow.setUsernameText(user.getUsername());
-        gameWindow.setScoreText(user.getScore());
-        gameWindow.addCoinFlipActionListener(new CoinFlipActionListener());
+        mainWindow = new MainWindow();
+        mainWindow.setUsernameText(user.getUsername());
+        mainWindow.setScoreText(user.getScore());
+        mainWindow.addCoinFlipActionListener(new GameButtonActionListener("FLIP"));
+        mainWindow.addDiceRollActionListener(new GameButtonActionListener("ROLL"));
     }
 
-    public class CoinFlipActionListener implements ActionListener {
+    public class GameButtonActionListener implements ActionListener {
+        private String command;
+        private int wager;
+        private GamePanel gamePanel;
+
+        public GameButtonActionListener(String command) {
+            super();
+            this.command = command;
+        }
+
         @Override
         public void actionPerformed(ActionEvent e) {
-            int wager = gameWindow.getWagerAmount();
+            gamePanel = mainWindow.getCurrentPanel();
+            wager = gamePanel.getWagerAmount();
 
             if(wager > user.getScore()) {
-                JOptionPane.showMessageDialog(gameWindow,
+                JOptionPane.showMessageDialog(mainWindow,
                         "Wager amount cannot be greater than score.");
                 return;
             }
 
-            clientNetwork.sendRequest("FLIP");
-            String response = clientNetwork.getResponse();
-            gameWindow.setResultText(response);
+            gameRequest();
+        }
 
-            if(response.equals(gameWindow.getCall().getActionCommand())) {
+        private void gameRequest() {
+            clientNetwork.sendRequest(command);
+            String response = clientNetwork.getResponse();
+            gamePanel.setResultText(response);
+
+            requestScoreUpdate(response);
+            response = clientNetwork.getResponse();
+
+            updateLocalScore(response);
+        }
+
+        private void requestScoreUpdate(String response) {
+            if(response.equals(gamePanel.getCall().getActionCommand())) {
                 String request = String.format("ADD %s %d", user.getUsername(), wager);
                 clientNetwork.sendRequest(request);
             } else {
                 String request = String.format("LOSE %s %d", user.getUsername(), wager);
                 clientNetwork.sendRequest(request);
             }
+        }
 
-            response = clientNetwork.getResponse();
+        private void updateLocalScore(String response) {
             String[] scoreResponse = response.split(" ");
             if(scoreResponse[0].equals("SCORE")) {
                 user.setScore(Integer.parseInt(scoreResponse[1]));
-                gameWindow.setScoreText(user.getScore());
+                mainWindow.setScoreText(user.getScore());
             }
         }
     }

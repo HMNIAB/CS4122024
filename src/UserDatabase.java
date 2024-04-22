@@ -1,6 +1,7 @@
 import java.sql.*;
 
 public class UserDatabase {
+
     private Connection connection;
 
     // Constructor
@@ -14,6 +15,10 @@ public class UserDatabase {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public Connection getConnection() {
+        return connection;
     }
 
     // Method to create a table
