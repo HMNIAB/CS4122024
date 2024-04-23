@@ -7,6 +7,7 @@ public class CoinFlipPanel extends GamePanel {
 
     public CoinFlipPanel() {
         super();
+        setImage(new CoinImage());
     }
 
     public void addCoinFlipActionListener(ActionListener a) {
@@ -17,14 +18,16 @@ public class CoinFlipPanel extends GamePanel {
     protected JPanel constructGamePanel() {
         resultText = new JLabel("Flip to play!");
         coinFlipButton = new JButton("FLIP");
+        imagePanel = constructImagePanel();
 
         JPanel jPanel = new JPanel();
         jPanel.setLayout(new BorderLayout());
-        jPanel.add(BorderLayout.CENTER, resultText);
+        jPanel.add(BorderLayout.NORTH, resultText);
+        jPanel.add(BorderLayout.CENTER, imagePanel);
         jPanel.add(BorderLayout.SOUTH, coinFlipButton);
-        jPanel.setBorder(BorderFactory.createEmptyBorder(100,100,100,100));
+        jPanel.setBorder(BorderFactory.createEmptyBorder(50,50,50,50));
 
-        jPanel.setSize(300,300);
+        // jPanel.setSize(300,300);
         return jPanel;
     }
 

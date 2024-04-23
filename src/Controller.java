@@ -54,6 +54,15 @@ public class Controller {
         private void gameRequest() {
             clientNetwork.sendRequest(command);
             String response = clientNetwork.getResponse();
+
+            switch(response) {
+                case "HEADS":
+                    AnimationPlayer.play(gamePanel, CoinImage.HEADS);
+                    break;
+                case "TAILS":
+                    AnimationPlayer.play(gamePanel, CoinImage.TAILS);
+                    break;
+            }
             gamePanel.setResultText(response);
 
             requestScoreUpdate(response);
