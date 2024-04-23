@@ -59,6 +59,10 @@ public class Controller {
             mainWindow.disableInput();
             gamePanel.disableInput();
 
+            triggerAnimation();
+        }
+
+        private void triggerAnimation() {
             AnimationPlayer animationPlayer = new AnimationPlayer(gamePanel, this);
             switch(response) {
                 case "HEADS":
@@ -66,6 +70,24 @@ public class Controller {
                     break;
                 case "TAILS":
                     animationPlayer.play(CoinImage.TAILS);
+                    break;
+                case "1":
+                    animationPlayer.play(DiceImage.ONE);
+                    break;
+                case "2":
+                    animationPlayer.play(DiceImage.TWO);
+                    break;
+                case "3":
+                    animationPlayer.play(DiceImage.THREE);
+                    break;
+                case "4":
+                    animationPlayer.play(DiceImage.FOUR);
+                    break;
+                case "5":
+                    animationPlayer.play(DiceImage.FIVE);
+                    break;
+                case "6":
+                    animationPlayer.play(DiceImage.SIX);
                     break;
             }
         }

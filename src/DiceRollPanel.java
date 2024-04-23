@@ -7,6 +7,7 @@ public class DiceRollPanel extends GamePanel {
 
     public DiceRollPanel() {
         super();
+        setImage(new DiceImage());
     }
 
     public void addDiceRollActionListener(ActionListener a) {
@@ -27,14 +28,16 @@ public class DiceRollPanel extends GamePanel {
     protected JPanel constructGamePanel() {
         resultText = new JLabel("Roll to play!");
         diceRollButton = new JButton("ROLL");
+        imagePanel = constructImagePanel();
 
         JPanel jPanel = new JPanel();
         jPanel.setLayout(new BorderLayout());
-        jPanel.add(BorderLayout.CENTER, resultText);
+        jPanel.add(BorderLayout.NORTH, resultText);
+        jPanel.add(BorderLayout.CENTER, imagePanel);
         jPanel.add(BorderLayout.SOUTH, diceRollButton);
         jPanel.setBorder(BorderFactory.createEmptyBorder(100,100,100,100));
 
-        jPanel.setSize(300,300);
+        // jPanel.setSize(300,300);
         return jPanel;
     }
 
