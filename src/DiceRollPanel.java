@@ -14,6 +14,16 @@ public class DiceRollPanel extends GamePanel {
     }
 
     @Override
+    public void disableInput() {
+        diceRollButton.setEnabled(false);
+    }
+
+    @Override
+    public void enableInput() {
+        diceRollButton.setEnabled(true);
+    }
+
+    @Override
     protected JPanel constructGamePanel() {
         resultText = new JLabel("Roll to play!");
         diceRollButton = new JButton("ROLL");

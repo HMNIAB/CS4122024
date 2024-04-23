@@ -22,6 +22,10 @@ public abstract class GamePanel extends JPanel {
         add(gamePanel);
     }
 
+    abstract public void disableInput();
+
+    abstract public void enableInput();
+
     public ButtonModel getCall() {
         return buttonGroup.getSelection();
     }

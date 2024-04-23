@@ -15,6 +15,16 @@ public class CoinFlipPanel extends GamePanel {
     }
 
     @Override
+    public void disableInput() {
+        coinFlipButton.setEnabled(false);
+    }
+
+    @Override
+    public void enableInput() {
+        coinFlipButton.setEnabled(true);
+    }
+
+    @Override
     protected JPanel constructGamePanel() {
         resultText = new JLabel("Flip to play!");
         coinFlipButton = new JButton("FLIP");

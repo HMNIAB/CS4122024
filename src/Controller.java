@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import static java.lang.Thread.sleep;
+
 public class Controller {
     private MainWindow mainWindow;
     private LoginWindow loginWindow;
@@ -29,6 +31,7 @@ public class Controller {
 
     public class GameButtonActionListener implements ActionListener {
         private String command;
+        private String response;
         private int wager;
         private GamePanel gamePanel;
 
@@ -53,26 +56,36 @@ public class Controller {
 
         private void gameRequest() {
             clientNetwork.sendRequest(command);
-            String response = clientNetwork.getResponse();
+            response = clientNetwork.getResponse();
 
+            mainWindow.disableInput();
+            gamePanel.disableInput();
+
+            AnimationPlayer animationPlayer = new AnimationPlayer(gamePanel, this);
             switch(response) {
                 case "HEADS":
-                    AnimationPlayer.play(gamePanel, CoinImage.HEADS);
+                    animationPlayer.play(CoinImage.HEADS);
                     break;
                 case "TAILS":
-                    AnimationPlayer.play(gamePanel, CoinImage.TAILS);
+                    animationPlayer.play(CoinImage.TAILS);
                     break;
             }
+        }
+
+        public void resumeAfterAnimation() {
             gamePanel.setResultText(response);
 
             requestScoreUpdate(response);
             response = clientNetwork.getResponse();
 
             updateLocalScore(response);
+
+            mainWindow.enableInput();
+            gamePanel.enableInput();
         }
 
-        private void requestScoreUpdate(String response) {
-            if(response.equals(gamePanel.getCall().getActionCommand())) {
+        private void requestScoreUpdate(String s) {
+            if(s.equals(gamePanel.getCall().getActionCommand())) {
                 String request = String.format("ADD %s %d", user.getUsername(), wager);
                 clientNetwork.sendRequest(request);
             } else {
@@ -81,8 +94,8 @@ public class Controller {
             }
         }
 
-        private void updateLocalScore(String response) {
-            String[] scoreResponse = response.split(" ");
+        private void updateLocalScore(String s) {
+            String[] scoreResponse = s.split(" ");
             if(scoreResponse[0].equals("SCORE")) {
                 user.setScore(Integer.parseInt(scoreResponse[1]));
                 mainWindow.setScoreText(user.getScore());

@@ -1,6 +1,6 @@
 public class CoinImage extends AnimatedImage {
     public static final int HEADS = 0;
-    public static final int TAILS = 27;
+    public static final int TAILS = 28;
     private final String FILEPATH = "img/coin.png";
 
     public CoinImage() {
@@ -8,6 +8,6 @@ public class CoinImage extends AnimatedImage {
         setFrameWidth(128);
         setFrameHeight(168);
         setAnimationStart(1);
-        setAnimationEnd(26);
+        setAnimationEnd(27);
     }
 }
