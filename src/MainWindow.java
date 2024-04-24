@@ -4,9 +4,6 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-import static java.awt.Color.black;
-import static java.awt.FlowLayout.LEFT;
-
 public class MainWindow extends JFrame {
     private JTabbedPane jTabs;
     private CoinFlipPanel coinFlipPanel;
@@ -35,8 +32,10 @@ public class MainWindow extends JFrame {
         getRootPane().setBorder(new EmptyBorder(10,10,10,10));
         setVisible(true);
     }
-
-    // TODO: when logout button exists, toggle setEnabled along with jTabs. maybe disable window closing if possible?
+    // Method to update the score display
+    public void updateScore(int score) {
+        scoreText.setText(score + " points");
+    }
 
     public void disableInput() {
         jTabs.setEnabled(false);
@@ -55,7 +54,7 @@ public class MainWindow extends JFrame {
     }
 
     public void setScoreText(int score) {
-        scoreText.setText(STR."\{String.valueOf(score)} points");
+        scoreText.setText(score + " points");
     }
 
     public void addCoinFlipActionListener(ActionListener a) {
@@ -79,7 +78,7 @@ public class MainWindow extends JFrame {
         jPanel.add(usernameText);
         jPanel.add(scoreText);
 
-        Border lineBorder = BorderFactory.createLineBorder(black);
+        Border lineBorder = BorderFactory.createLineBorder(Color.black);
         Border emptyBorder = BorderFactory.createEmptyBorder(5,5,5,5);
 
         jPanel.setSize(600, 50);
@@ -90,7 +89,7 @@ public class MainWindow extends JFrame {
     private JPanel constructBottomPanel() {
         JPanel jPanel = new JPanel();
         FlowLayout flowLayout = new FlowLayout();
-        flowLayout.setAlignment(LEFT);
+        flowLayout.setAlignment(FlowLayout.LEFT);
         jPanel.setLayout(flowLayout);
 
         helpButton = new JButton("?");

@@ -12,8 +12,8 @@ public class Server {
 
         try {
             //need to close socket somewhere - resource leak otherwise
-            ServerSocket server = new ServerSocket(5000);
-            System.out.println("Server established on port 5000");
+            ServerSocket server = new ServerSocket(6000);
+            System.out.println("Server established on port 6000");
             while(true) {
                 System.out.println("Waiting for client to connect...");
                 Socket clientSocket = server.accept();

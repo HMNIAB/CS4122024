@@ -23,8 +23,8 @@ public class Controller {
         mainWindow = new MainWindow();
         mainWindow.setUsernameText(user.getUsername());
         mainWindow.setScoreText(user.getScore());
-        mainWindow.addCoinFlipActionListener(new GameButtonActionListener("FLIP"));
-        mainWindow.addDiceRollActionListener(new GameButtonActionListener("ROLL"));
+        mainWindow.addCoinFlipActionListener(new GameButtonActionListener("FLIP", mainWindow));
+        mainWindow.addDiceRollActionListener(new GameButtonActionListener("ROLL", mainWindow));
         mainWindow.addHelpButtonActionListener(new HelpButtonListener());
     }
 
@@ -33,10 +33,11 @@ public class Controller {
         private String response;
         private int wager;
         private GamePanel gamePanel;
-
-        public GameButtonActionListener(String command) {
+        private MainWindow mainWindow;
+        public GameButtonActionListener(String command, MainWindow mainWindow) {
             super();
             this.command = command;
+            this.mainWindow = mainWindow;
         }
 
         @Override
@@ -103,6 +104,9 @@ public class Controller {
 
             mainWindow.enableInput();
             gamePanel.enableInput();
+
+            //added the update to score after each turn will test - think it should work here and not below... maybe below too?
+            mainWindow.updateScore((user.getScore()));
         }
 
         private void requestScoreUpdate(String s) {

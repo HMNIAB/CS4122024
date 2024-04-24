@@ -66,6 +66,6 @@ public class ServerThread extends Server implements Runnable {
         User user = database.getUser(username);
         int newScore = user.getScore() + change;
         database.updateScore(username, newScore);
-        return String.format(STR."SCORE \{newScore}");
+        return "SCORE" + newScore;
     }
 }
