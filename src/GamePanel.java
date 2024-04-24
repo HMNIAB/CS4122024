@@ -15,11 +15,14 @@ public abstract class GamePanel extends JPanel {
     private int currentFrame = 0;
 
     public GamePanel() {
+        setLayout(new GridLayout(1, 2));
+
         gamePanel = constructGamePanel();
         wagerPanel = constructWagerPanel();
 
         add(wagerPanel);
         add(gamePanel);
+        setSize(200, 200);
     }
 
     abstract public void disableInput();
@@ -67,6 +70,7 @@ public abstract class GamePanel extends JPanel {
 
         JPanel buttonsPanel = constructButtonsPanel();
         wagerField = new WagerField();
+        wagerField.setSize(80, 50);
 
         wagerPanel.add(wagerLabel);
         wagerPanel.add(buttonsPanel);
@@ -77,17 +81,6 @@ public abstract class GamePanel extends JPanel {
     }
 
     protected JPanel constructImagePanel() {
-//        JPanel jPanel = new JPanel() {
-//            @Override
-//            public void paintComponent(Graphics g) {
-//                g.drawImage(image.getAnimationFrame(currentFrame), 0, 0, new ImageObserver() {
-//                    @Override
-//                    public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {
-//                        return false;
-//                    }
-//                });
-//            }
-//        };
         JPanel jPanel = new JPanel();
         JLabel jLabel = new JLabel(imageIcon);
         jPanel.add(jLabel);

@@ -35,7 +35,7 @@ public class DiceRollPanel extends GamePanel {
         jPanel.add(BorderLayout.NORTH, resultText);
         jPanel.add(BorderLayout.CENTER, imagePanel);
         jPanel.add(BorderLayout.SOUTH, diceRollButton);
-        jPanel.setBorder(BorderFactory.createEmptyBorder(100,100,100,100));
+        jPanel.setBorder(BorderFactory.createEmptyBorder(50,50,50,50));
 
         // jPanel.setSize(300,300);
         return jPanel;
