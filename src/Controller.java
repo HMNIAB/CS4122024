@@ -101,7 +101,7 @@ public class Controller {
 
             updateLocalScore(response);
 
-            clientNetwork.sendRequest("LEADERBOARD " + user.getUsername());
+            clientNetwork.sendRequest("LEADERBOARD");
             response = clientNetwork.getResponse();
             mainWindow.updateScores(response);
 

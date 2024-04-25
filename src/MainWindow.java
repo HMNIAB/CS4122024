@@ -4,6 +4,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MainWindow extends JFrame {
     private JTabbedPane jTabs;
@@ -99,11 +100,8 @@ public class MainWindow extends JFrame {
     }
 
     public void updateScores(String nearbyUsers) {
-        String[] scoreList = nearbyUsers.split(" ");
-        ArrayList<String> arrayList = new ArrayList<String>();
-        for(int i = 1; i < scoreList.length; i+=2) {
-            arrayList.add(scoreList[i] + " " + scoreList[i + 1]);
-        }
-        System.out.println(arrayList);
+        nearbyUsers = nearbyUsers.replace("LEADERBOARD ", "");
+        String[] scoreList = nearbyUsers.split(",");
+        System.out.println(Arrays.toString(scoreList));
     }
 }

@@ -27,6 +27,8 @@ public class ServerThread extends Server implements Runnable {
                     response = CoinFlipGame.flipCoin();
                 } else if(input.equals("ROLL")) {
                     response = DiceRollGame.rollDice();
+                } else if(input.equals("LEADERBOARD")) {
+                    response = requestLeaderboardUpdate();
                 } else {
                     String[] splitInput = input.split(" ");
                     response = parseLongInput(splitInput);
@@ -58,9 +60,6 @@ public class ServerThread extends Server implements Runnable {
                 username = splitInput[1];
                 change = -1 * (Integer.parseInt(splitInput[2]));
                 return requestScoreUpdate(username, change);
-            case "LEADERBOARD":
-                username = splitInput[1];
-                return requestLeaderboardUpdate(username);
             default:
                 return "INVALID";
         }
@@ -73,12 +72,12 @@ public class ServerThread extends Server implements Runnable {
         return String.format("SCORE " + newScore);
     }
 
-    private String requestLeaderboardUpdate(String username) {
+    private String requestLeaderboardUpdate() {
         LeaderboardUpdater leaderboardUpdater = new LeaderboardUpdater();
         ArrayList<User> users = leaderboardUpdater.getTopThreePlayers();
         StringBuilder response = new StringBuilder("LEADERBOARD ");
         for(User u : users) {
-            response.append(u.getUsername()).append(": ").append(u.getScore()).append(" ");
+            response.append(u).append(",");
         }
         return response.toString();
     }
