@@ -39,6 +39,7 @@ public class Controller {
         private String command;
         private String response;
         private int wager;
+        private ButtonModel call;
         private GamePanel gamePanel;
 
         public GameButtonActionListener(String command) {
@@ -50,6 +51,7 @@ public class Controller {
         public void actionPerformed(ActionEvent e) {
             gamePanel = mainWindow.getCurrentPanel();
             wager = gamePanel.getWagerAmount();
+            call = gamePanel.getCall();
 
             if(wager > user.getScore()) {
                 JOptionPane.showMessageDialog(mainWindow,
@@ -115,7 +117,7 @@ public class Controller {
         }
 
         private void requestScoreUpdate(String s) {
-            if(s.equals(gamePanel.getCall().getActionCommand())) {
+            if(s.equals(call.getActionCommand())) {
                 String request = String.format("ADD %s %d", user.getUsername(), wager);
                 clientNetwork.sendRequest(request);
             } else {
