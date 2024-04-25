@@ -27,8 +27,12 @@ public class ClientNetwork {
     }
 
     public void sendRequest(String request) {
-        printWriter.println(request);
-        printWriter.flush();
+        if (printWriter != null) {
+            printWriter.println(request);
+            printWriter.flush();
+        } else {
+            System.err.println("PrintWriter is not initialized");
+        }
     }
 
     public String getResponse() {
@@ -38,7 +42,6 @@ public class ClientNetwork {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-
         return response;
     }
 }
