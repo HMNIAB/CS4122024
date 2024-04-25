@@ -3,6 +3,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import static java.awt.Color.black;
 import static java.awt.FlowLayout.LEFT;
@@ -98,5 +99,14 @@ public class MainWindow extends JFrame {
         jPanel.add(helpButton);
 
         return jPanel;
+    }
+
+    public void updateScores(String nearbyUsers) {
+        String[] scoreList = nearbyUsers.split(" ");
+        ArrayList<String> arrayList = new ArrayList<String>();
+        for(int i = 1; i < scoreList.length; i+=2) {
+            arrayList.add(scoreList[i] + " " + scoreList[i + 1]);
+        }
+        System.out.println(arrayList);
     }
 }

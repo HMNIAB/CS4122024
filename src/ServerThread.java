@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class ServerThread extends Server implements Runnable {
     private Socket clientSocket;
@@ -57,6 +58,9 @@ public class ServerThread extends Server implements Runnable {
                 username = splitInput[1];
                 change = -1 * (Integer.parseInt(splitInput[2]));
                 return requestScoreUpdate(username, change);
+            case "LEADERBOARD":
+                username = splitInput[1];
+                return requestLeaderboardUpdate(username);
             default:
                 return "INVALID";
         }
@@ -66,6 +70,16 @@ public class ServerThread extends Server implements Runnable {
         User user = database.getUser(username);
         int newScore = user.getScore() + change;
         database.updateScore(username, newScore);
-        return String.format(STR."SCORE \{newScore}");
+        return String.format("SCORE " + newScore);
+    }
+
+    private String requestLeaderboardUpdate(String username) {
+        LeaderboardUpdater leaderboardUpdater = new LeaderboardUpdater();
+        ArrayList<User> users = leaderboardUpdater.getLeaderboard(3, username);
+        StringBuilder response = new StringBuilder("LEADERBOARD ");
+        for(User u : users) {
+            response.append(u.getUsername()).append(": ").append(u.getScore()).append(" ");
+        }
+        return response.toString();
     }
 }

@@ -11,7 +11,7 @@ public class User {
 
     @Override
     public String toString() {
-        return String.format("%s %s %d", username, password, score);
+        return String.format("%s %s", username, score);
     }
 
     public String getUsername() {

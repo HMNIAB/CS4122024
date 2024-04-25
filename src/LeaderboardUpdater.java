@@ -7,39 +7,50 @@ import java.util.List;
 public class LeaderboardUpdater {
     private UserDatabase userDatabase;
 
-    // Constructor
     public LeaderboardUpdater() {
         userDatabase = new UserDatabase();
     }
 
-    // Method to update the leaderboard
-    public List<User> getLeaderboard(int topN) {
-        List<User> leaderboard = new ArrayList<>();
-        String selectSQL = "SELECT * FROM users ORDER BY score DESC LIMIT ?";
+    public ArrayList<User> getLeaderboard(int topN, String username) {
+        ArrayList<User> leaderboard = new ArrayList<>();
         try {
-            // Prepare statement to select top N users based on score
+            int userScore = userDatabase.getUser(username).getScore();
+            int rank = 0;
+            String selectSQL = "SELECT * FROM users ORDER BY score DESC LIMIT ?";
             PreparedStatement preparedStatement = userDatabase.getConnection().prepareStatement(selectSQL);
             preparedStatement.setInt(1, topN);
             ResultSet resultSet = preparedStatement.executeQuery();
-            
-            // Retrieve users and add them to the leaderboard
+
             while (resultSet.next()) {
-                String username = resultSet.getString("username");
-                String password = resultSet.getString("password");
-                int score = resultSet.getInt("score");
-                User user = new User(username, password, score);
+                String fetchedUsername = resultSet.getString("username");
+                int fetchedScore = resultSet.getInt("score");
+                User user = new User(fetchedUsername, "", fetchedScore);
                 leaderboard.add(user);
+                if (fetchedUsername.equals(username)) {
+                    rank = leaderboard.size(); // Rank of the current user
+                }
             }
             resultSet.close();
             preparedStatement.close();
+
+            int aboveIndex = Math.max(rank - 2, 0);
+            int belowIndex = Math.min(rank, leaderboard.size() - 1);
+
+            ArrayList<User> nearbyUsers = new ArrayList<>();
+            if (aboveIndex >= 0 && belowIndex < leaderboard.size()) {
+                nearbyUsers.add(leaderboard.get(aboveIndex)); // User above
+                nearbyUsers.add(leaderboard.get(belowIndex)); // User below
+            }
+
+            return nearbyUsers;
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return leaderboard;
     }
 
-    // Method to close the database connection
     public void close() {
         userDatabase.close();
     }
 }
+

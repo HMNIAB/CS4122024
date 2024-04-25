@@ -101,6 +101,10 @@ public class Controller {
 
             updateLocalScore(response);
 
+            clientNetwork.sendRequest("LEADERBOARD " + user.getUsername());
+            response = clientNetwork.getResponse();
+            mainWindow.updateScores(response);
+
             mainWindow.enableInput();
             gamePanel.enableInput();
         }
@@ -155,9 +159,8 @@ public class Controller {
             } else {
                 String[] userInfo = response.split(" ");
                 String username = userInfo[1];
-                String password = userInfo[2];
-                int score = Integer.parseInt(userInfo[3]);
-                user = new User(username, password, score);
+                int score = Integer.parseInt(userInfo[2]);
+                user = new User(username, null, score);
                 loginWindow.dispose();
                 createGameWindow();
             }
