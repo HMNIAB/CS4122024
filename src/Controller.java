@@ -146,6 +146,7 @@ public class Controller {
             if (loginWindow.getUsername() == null || loginWindow.getPassword() == null) {
                 JOptionPane.showMessageDialog(loginWindow,
                         "Username and password must both be provided.");
+                return; // Added to prevent further execution if username or password is null
             }
 
             String request = String.format("LOGIN %s %s", loginWindow.getUsername(),
@@ -173,6 +174,7 @@ public class Controller {
             if (loginWindow.getUsername() == null || loginWindow.getPassword() == null) {
                 JOptionPane.showMessageDialog(loginWindow,
                         "Username and password must both be provided.");
+                return; // Added to prevent further execution if username or password is null
             }
 
             String request = String.format("CREATE %s %s", loginWindow.getUsername(),
@@ -190,3 +192,4 @@ public class Controller {
         }
     }
 }
+

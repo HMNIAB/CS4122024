@@ -1,7 +1,6 @@
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.awt.image.ImageObserver;
 
 public abstract class GamePanel extends JPanel {
     protected JLabel resultText;
@@ -34,9 +33,20 @@ public abstract class GamePanel extends JPanel {
     }
 
     public int getWagerAmount() {
-        if(wagerField.getText() != null) {
-            return Integer.parseInt(wagerField.getText());
-        } else return 0;
+        String wagerText = wagerField.getText();
+        if (wagerText == null || wagerText.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Please enter a wager amount.");
+            return 0;
+        }
+
+        try {
+            return Integer.parseInt(wagerText);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Please enter a valid integer for the wager amount.");
+            return 0;
+        }
     }
 
     public void setResultText(String text) {
@@ -92,3 +102,4 @@ public abstract class GamePanel extends JPanel {
 
     protected abstract JPanel constructButtonsPanel();
 }
+
