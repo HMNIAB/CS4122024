@@ -26,6 +26,13 @@ public class Controller {
         mainWindow.addCoinFlipActionListener(new GameButtonActionListener("FLIP"));
         mainWindow.addDiceRollActionListener(new GameButtonActionListener("ROLL"));
         mainWindow.addHelpButtonActionListener(new HelpButtonListener());
+        requestLeaderboardUpdate();
+    }
+
+    private void requestLeaderboardUpdate() {
+        clientNetwork.sendRequest("LEADERBOARD");
+        String response = clientNetwork.getResponse();
+        mainWindow.updateLeaderboard(response);
     }
 
     public class GameButtonActionListener implements ActionListener {
@@ -101,9 +108,7 @@ public class Controller {
 
             updateLocalScore(response);
 
-            clientNetwork.sendRequest("LEADERBOARD");
-            response = clientNetwork.getResponse();
-            mainWindow.updateScores(response);
+            requestLeaderboardUpdate();
 
             mainWindow.enableInput();
             gamePanel.enableInput();

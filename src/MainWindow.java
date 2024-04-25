@@ -1,6 +1,10 @@
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -13,10 +17,12 @@ public class MainWindow extends JFrame {
     private JLabel scoreText;
     private JLabel usernameText;
     private JButton helpButton;
+    private TableModel model;
 
     public MainWindow() {
         super("Coin Flip Game");
         JPanel infoPanel = constructInfoPanel();
+        JPanel leaderboardPanel = constructLeaderboardPanel();
         JPanel bottomPanel = constructBottomPanel();
         coinFlipPanel = new CoinFlipPanel();
         diceRollPanel = new DiceRollPanel();
@@ -28,9 +34,10 @@ public class MainWindow extends JFrame {
 
         getContentPane().add(BorderLayout.NORTH, infoPanel);
         getContentPane().add(BorderLayout.CENTER, jTabs);
+        getContentPane().add(BorderLayout.EAST, leaderboardPanel);
         getContentPane().add(BorderLayout.SOUTH, bottomPanel);
 
-        setSize(600, 500);
+        setSize(700, 500);
         getRootPane().setBorder(new EmptyBorder(10,10,10,10));
         setVisible(true);
     }
@@ -86,6 +93,19 @@ public class MainWindow extends JFrame {
         return jPanel;
     }
 
+    private JPanel constructLeaderboardPanel() {
+        JPanel jPanel = new JPanel();
+        model = new DefaultTableModel(new String[]{"Username", "Score"}, 3);
+        JTable jTable = new JTable(model);
+        jPanel.add(jTable);
+
+        Border lineBorder = BorderFactory.createTitledBorder("Leaderboard");
+        Border emptyBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
+        jPanel.setBorder(BorderFactory.createCompoundBorder(lineBorder, emptyBorder));
+        jPanel.setSize(100,500);
+        return jPanel;
+    }
+
     private JPanel constructBottomPanel() {
         JPanel jPanel = new JPanel();
         FlowLayout flowLayout = new FlowLayout();
@@ -99,9 +119,13 @@ public class MainWindow extends JFrame {
         return jPanel;
     }
 
-    public void updateScores(String nearbyUsers) {
-        nearbyUsers = nearbyUsers.replace("LEADERBOARD ", "");
-        String[] scoreList = nearbyUsers.split(",");
-        System.out.println(Arrays.toString(scoreList));
+    public void updateLeaderboard(String scores) {
+        scores = scores.replace("LEADERBOARD ", "");
+        String[] scoreList = scores.split(",");
+        for(int i = 0; i < scoreList.length; i++){
+            String[] user = scoreList[i].split(" ");
+            model.setValueAt(user[0], i, 0);
+            model.setValueAt(user[1], i, 1);
+        }
     }
 }
