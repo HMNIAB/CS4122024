@@ -23,48 +23,48 @@ Sloane Vaznis & Avery Beauter
   <tr>
     <td></td>
     <td>Check Balance</td>
-    <td>🚫</td>
-    <td>❌</td>
+    <td>✅ </td>
+    <td>✅ </td>
     <td></td>
     <td></td>
   </tr>
   <tr>
     <td></td>
     <td>Wager Valid</td>
-    <td>🚫</td>
-    <td>🚧</td>
-    <td>Sloane</td>
+    <td>✅ </td>
+    <td>✅ </td>
+    <td></td>
     <td></td>
   </tr>
   <tr>
     <td></td>
     <td>Update Wager</td>
-    <td>🚫</td>
-    <td>🚧</td>
-    <td>Sloane</td>
+    <td>✅ </td>
+    <td>✅ </td>
+    <td></td>
     <td></td>
   </tr>
   <tr>
     <td></td>
     <td>Flip Coin</td>
-    <td>🚫</td>
-    <td>❌</td>
+    <td>✅ </td>
+    <td>✅ </td>
     <td></td>
     <td></td>
   </tr>
   <tr>
     <td></td>
     <td>Report Results</td>
-    <td>🚫</td>
-    <td>❌</td>
+    <td>✅ </td>
+    <td>✅ </td>
     <td></td>
     <td></td>
   </tr>
   <tr>
     <td></td>
     <td>Send Notification</td>
-    <td>🚫</td>
-    <td>❌</td>
+    <td>✅ </td>
+    <td>✅ </td>
     <td></td>
     <td></td>
   </tr>
@@ -80,24 +80,24 @@ Sloane Vaznis & Avery Beauter
   <tr>
     <td></td>
     <td>Send Account Info</td>
-    <td>🚧</td>
-    <td>❌</td>
+    <td>✅ </td>
+    <td>✅ </td>
     <td></td>
     <td></td>
   </tr>
   <tr>
     <td></td>
     <td>Set Wager</td>
-    <td>🚫</td>
-    <td>🚧</td>
-    <td>Sloane</td>
+    <td>✅ </td>
+    <td>✅ </td>
+    <td></td>
     <td></td>
   </tr>
   <tr>
     <td></td>
     <td>Coin-Flip Button</td>
-    <td>🚧</td>
-    <td>❌</td>
+    <td>✅ </td>
+    <td>✅ </td>
     <td></td>
     <td></td>
   </tr>
@@ -112,56 +112,56 @@ Sloane Vaznis & Avery Beauter
   <tr>
     <td></td>
     <td>Incorrect Login</td>
-    <td>🚧</td>
-    <td>❌</td>
+    <td>✅ </td>
+    <td>✅ </td>
     <td></td>
     <td></td>
   </tr>
   <tr>
     <td></td>
     <td>Account Exists</td>
-    <td>🚧</td>
-    <td>❌</td>
+    <td>✅ </td>
+    <td>✅ </td>
     <td></td>
     <td></td>
   </tr>
   <tr>
     <td></td>
     <td>Login</td>
-    <td>🚧</td>
-    <td>❌</td>
+    <td>✅ </td>
+    <td>✅ </td>
     <td></td>
     <td></td>
   </tr>
   <tr>
     <td></td>
     <td>Create Account</td>
-    <td>🚧</td>
-    <td>❌</td>
+    <td>✅ </td>
+    <td>✅ </td>
     <td></td>
     <td></td>
   </tr>
   <tr>
     <td></td>
     <td>Update Info</td>
-    <td>🚧</td>
-    <td>❌</td>
+    <td>✅ </td>
+    <td>✅ </td>
     <td></td>
     <td></td>
   </tr>
   <tr>
     <td></td>
     <td>Update Leaderboard</td>
-    <td>🚧</td>
-    <td>❌</td>
-    <td>Avery</td>
+    <td>✅ </td>
+    <td>✅ </td>
+    <td></td>
     <td></td>
   </tr>
   <tr>
     <td></td>
     <td>Send Notification</td>
-    <td>🚧</td>
-    <td>❌</td>
+    <td>✅ </td>
+    <td>✅ </td>
     <td></td>
     <td></td>
   </tr>
