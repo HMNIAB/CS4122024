@@ -14,6 +14,7 @@ public class MainWindow extends JFrame {
     private JLabel scoreText;
     private JLabel usernameText;
     private JButton helpButton;
+    private JButton logoutButton;
     private TableModel model;
 
     public MainWindow() {
@@ -36,6 +37,7 @@ public class MainWindow extends JFrame {
 
         setSize(700, 500);
         getRootPane().setBorder(new EmptyBorder(10,10,10,10));
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
     }
 
@@ -73,6 +75,8 @@ public class MainWindow extends JFrame {
         helpButton.addActionListener(a);
     }
 
+    public void addLogoutButtonActionListener(ActionListener a) { logoutButton.addActionListener(a);}
+
     public void addTabChangeListener(ChangeListener c) {
         jTabs.addChangeListener(c);
     }
@@ -82,15 +86,22 @@ public class MainWindow extends JFrame {
         scoreText = new JLabel();
 
         JPanel jPanel = new JPanel();
-        jPanel.setLayout(new GridLayout(1,2));
-        jPanel.add(usernameText);
-        jPanel.add(scoreText);
+
+        JPanel subPanel = new JPanel();
+        subPanel.setLayout(new GridLayout(1,2));
+        subPanel.add(usernameText);
+        subPanel.add(scoreText);
 
         Border lineBorder = BorderFactory.createLineBorder(Color.black);
         Border emptyBorder = BorderFactory.createEmptyBorder(5,5,5,5);
 
-        jPanel.setSize(600, 50);
-        jPanel.setBorder(BorderFactory.createCompoundBorder(lineBorder, emptyBorder));
+        subPanel.setSize(500, 50);
+        subPanel.setBorder(BorderFactory.createCompoundBorder(lineBorder, emptyBorder));
+
+        logoutButton = new JButton("Log Out");
+
+        jPanel.add(subPanel);
+        jPanel.add(logoutButton);
         return jPanel;
     }
 

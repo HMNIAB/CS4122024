@@ -1,29 +1,66 @@
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
+import java.util.ArrayList;
 
 public class Server {
+    private static ServerSocket server;
     protected static UserDatabase database;
     protected static LoginManager loginManager;
+    private static ArrayList<ServerThread> socketList;
+    private static ArrayList<Thread> threadList;
 
     public static void main(String[] args) {
         database = new UserDatabase();
         loginManager = new LoginManager(database);
 
         try {
-            //need to close socket somewhere - resource leak otherwise
-            ServerSocket server = new ServerSocket(5000);
+            server = new ServerSocket(5000);
             System.out.println("Server established on port 5000");
-            while(true) {
-                System.out.println("Waiting for client to connect...");
-                Socket clientSocket = server.accept();
+            threadList = new ArrayList<Thread>();
+            socketList = new ArrayList<ServerThread>();
+            addShutdownAction();
 
-                Thread thread = new Thread(new ServerThread(clientSocket));
-                thread.start();
+            while(!server.isClosed()) {
+                try {
+                    Socket clientSocket = server.accept();
+
+                    ServerThread serverThread = new ServerThread(clientSocket);
+                    Thread thread = new Thread(serverThread);
+                    threadList.add(thread);
+                    socketList.add(serverThread);
+                    thread.start();
+                } catch(SocketException e) {
+                    System.out.println("Acceptance of new connections interrupted due to server closure.");
+                }
             }
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        } catch(IOException e) {
+            e.printStackTrace();
         }
+    }
+
+    public static void addShutdownAction() {
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            @Override
+            public void run() {
+                for(ServerThread t : socketList) {
+                    t.close();
+                }
+                for(Thread t : threadList) {
+                    try {
+                        t.join();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                try {
+                    server.close();
+                    System.out.println("Server closed.");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }

@@ -3,15 +3,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 
 public class ClientNetwork {
+    private Controller controller;
     private Socket socket;
     private PrintWriter printWriter;
     private InputStreamReader inputStreamReader;
     private BufferedReader bufferedReader;
 
-    public ClientNetwork() {
+    public ClientNetwork(Controller controller) {
+        this.controller = controller;
         try {
             socket = new Socket("127.0.0.1", 5000);
             System.out.println("Connected to server");
@@ -27,21 +30,30 @@ public class ClientNetwork {
     }
 
     public void sendRequest(String request) {
-        if (printWriter != null) {
-            printWriter.println(request);
-            printWriter.flush();
-        } else {
-            System.err.println("PrintWriter is not initialized");
-        }
+        printWriter.println(request);
+        printWriter.flush();
     }
 
     public String getResponse() {
         String response = null;
         try {
             response = bufferedReader.readLine();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        } catch (SocketException e) {
+            closeConnection();
+            controller.connectionClosed();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
         return response;
+    }
+
+    public void closeConnection() {
+        printWriter.close();
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

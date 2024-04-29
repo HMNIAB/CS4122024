@@ -3,6 +3,10 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import static java.lang.System.exit;
 
 public class Controller {
     private MainWindow mainWindow;
@@ -11,7 +15,7 @@ public class Controller {
     private User user;
 
     public Controller() {
-        clientNetwork = new ClientNetwork();
+        clientNetwork = new ClientNetwork(this);
         createLoginWindow();
     }
 
@@ -19,6 +23,7 @@ public class Controller {
         loginWindow = new LoginWindow();
         loginWindow.addLoginActionListener(new LoginActionListener());
         loginWindow.addCreateAccountActionListener(new CreateAccountActionListener());
+        loginWindow.addWindowListener(new WindowCloseListener());
     }
 
     private void createGameWindow() {
@@ -28,15 +33,23 @@ public class Controller {
         mainWindow.addCoinFlipActionListener(new GameButtonActionListener("FLIP"));
         mainWindow.addDiceRollActionListener(new GameButtonActionListener("ROLL"));
         mainWindow.addHelpButtonActionListener(new HelpButtonListener());
+        mainWindow.addLogoutButtonActionListener(new LogoutActionListener());
         mainWindow.addTabChangeListener(new TabChangeListener());
         requestLeaderboardUpdate();
         mainWindow.getCurrentPanel().updateWagerSpinner(user.getScore());
+        mainWindow.addWindowListener(new WindowCloseListener());
     }
 
     private void requestLeaderboardUpdate() {
         clientNetwork.sendRequest("LEADERBOARD");
         String response = clientNetwork.getResponse();
         mainWindow.updateLeaderboard(response);
+    }
+
+    public void connectionClosed() {
+        JOptionPane.showMessageDialog(null, "The connection to the server has been lost." +
+                "The game will now close.");
+        exit(1);
     }
 
     public class GameButtonActionListener implements ActionListener {
@@ -168,7 +181,7 @@ public class Controller {
             String response = clientNetwork.getResponse();
             if(response.equals("FALSE")) {
                 JOptionPane.showMessageDialog(loginWindow,
-                        "Login failed. Please try again or create a new account.");
+                        "Login failed. Please try again, log out elsewhere, or create a new account.");
             } else {
                 String[] userInfo = response.split(" ");
                 String username = userInfo[1];
@@ -177,6 +190,14 @@ public class Controller {
                 loginWindow.dispose();
                 createGameWindow();
             }
+        }
+    }
+
+    public class LogoutActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            clientNetwork.sendRequest("LOGOUT " + user.getUsername());
+            mainWindow.dispose();
         }
     }
 
@@ -209,6 +230,14 @@ public class Controller {
         public void stateChanged(ChangeEvent e) {
             GamePanel gamePanel = mainWindow.getCurrentPanel();
             gamePanel.updateWagerSpinner(user.getScore());
+        }
+    }
+
+    public class WindowCloseListener extends WindowAdapter {
+        @Override
+        public void windowClosed(WindowEvent e) {
+            clientNetwork.closeConnection();
+            exit(0);
         }
     }
 }

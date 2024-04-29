@@ -32,7 +32,7 @@ public class LoginWindow extends JFrame {
         add(loginPanel);
         
         // Set frame properties
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(300, 150);
         setLocationRelativeTo(null);
         setVisible(true);

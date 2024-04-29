@@ -7,10 +7,25 @@ import java.util.ArrayList;
 
 public class ServerThread extends Server implements Runnable {
     private Socket clientSocket;
+    private String currentUsername;
+    private PrintWriter printWriter;
 
     public ServerThread(Socket clientSocket) {
         this.clientSocket = clientSocket;
         System.out.println("Connected to client " + clientSocket);
+    }
+
+    public void close() {
+        if(currentUsername != null) loginManager.logout(currentUsername);
+        System.out.println("Disconnecting from client " + clientSocket);
+        printWriter.print("CLOSE");
+        printWriter.flush();
+        printWriter.close();
+        try {
+            clientSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -18,10 +33,10 @@ public class ServerThread extends Server implements Runnable {
         try {
             InputStreamReader inputStreamReader = new InputStreamReader(clientSocket.getInputStream());
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-            PrintWriter printWriter = new PrintWriter(clientSocket.getOutputStream());
+            printWriter = new PrintWriter(clientSocket.getOutputStream());
 
             String input;
-            while((input = bufferedReader.readLine()) != null) {
+            while(!clientSocket.isClosed() && (input = bufferedReader.readLine()) != null) {
                 String response;
                 if(input.equals("FLIP")) {
                     response = CoinFlipGame.flipCoin();
@@ -36,6 +51,10 @@ public class ServerThread extends Server implements Runnable {
                 printWriter.println(response);
                 printWriter.flush();
             }
+            if(currentUsername != null) loginManager.logout(currentUsername);
+            System.out.println("Disconnecting from client " + clientSocket);
+            clientSocket.close();
+
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -46,8 +65,14 @@ public class ServerThread extends Server implements Runnable {
         switch(splitInput[0]) {
             case "LOGIN":
                 User user = loginManager.login(splitInput[1], splitInput[2]);
-                if(user != null) return ("TRUE " + user);
+                if(user != null) {
+                    currentUsername = user.getUsername();
+                    return ("TRUE " + user);
+                }
                 else return "FALSE";
+            case "LOGOUT":
+                loginManager.logout(splitInput[1]);
+                return null;
             case "CREATE":
                 if(loginManager.createAccount(splitInput[1], splitInput[2]))
                     return "TRUE";
