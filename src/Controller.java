@@ -47,7 +47,7 @@ public class Controller {
     }
 
     public void connectionClosed() {
-        JOptionPane.showMessageDialog(null, "The connection to the server has been lost." +
+        JOptionPane.showMessageDialog(null, "The connection to the server has been lost. " +
                 "The game will now close.");
         exit(1);
     }
@@ -160,7 +160,8 @@ public class Controller {
                     "Use the wager panel on the left to bet points from your\n" +
                     "current score (shown at top) on the outcome of the game.\n" +
                     "You cannot bet more points than you have. When you're happy\n" +
-                    "with your wager, press the FLIP or ROLL button to play.");
+                    "with your wager, press the FLIP or ROLL button to play. Winning\n" +
+                    "will earn you your wager amount, +1 bonus point for winning.");
             JOptionPane.showMessageDialog(mainWindow, helpString);
         }
     }
@@ -187,7 +188,7 @@ public class Controller {
                 String username = userInfo[1];
                 int score = Integer.parseInt(userInfo[2]);
                 user = new User(username, null, score);
-                loginWindow.dispose();
+                loginWindow.setVisible(false);
                 createGameWindow();
             }
         }

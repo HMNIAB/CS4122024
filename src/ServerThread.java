@@ -79,7 +79,7 @@ public class ServerThread extends Server implements Runnable {
                 else return "FALSE";
             case "ADD":
                 String username = splitInput[1];
-                int change = Integer.parseInt(splitInput[2]);
+                int change = 1 + Integer.parseInt(splitInput[2]);
                 return requestScoreUpdate(username, change);
             case "LOSE":
                 username = splitInput[1];
