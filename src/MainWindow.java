@@ -1,14 +1,11 @@
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.TitledBorder;
-import javax.swing.table.AbstractTableModel;
+import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class MainWindow extends JFrame {
     private JTabbedPane jTabs;
@@ -74,6 +71,10 @@ public class MainWindow extends JFrame {
 
     public void addHelpButtonActionListener(ActionListener a) {
         helpButton.addActionListener(a);
+    }
+
+    public void addTabChangeListener(ChangeListener c) {
+        jTabs.addChangeListener(c);
     }
 
     private JPanel constructInfoPanel() {

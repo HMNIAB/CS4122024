@@ -8,7 +8,8 @@ public abstract class GamePanel extends JPanel {
     private JPanel gamePanel;
     protected JPanel imagePanel;
     private JPanel wagerPanel;
-    private WagerField wagerField;
+    private SpinnerNumberModel spinnerModel;
+    private JSpinner wagerSpinner;
     private ImageIcon imageIcon = new ImageIcon();
     private AnimatedImage image;
     private int currentFrame = 0;
@@ -33,20 +34,7 @@ public abstract class GamePanel extends JPanel {
     }
 
     public int getWagerAmount() {
-        String wagerText = wagerField.getText();
-        if (wagerText == null || wagerText.isEmpty()) {
-            JOptionPane.showMessageDialog(this,
-                    "Please enter a wager amount.");
-            return 0;
-        }
-
-        try {
-            return Integer.parseInt(wagerText);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this,
-                    "Please enter a valid integer for the wager amount.");
-            return 0;
-        }
+        return (int) wagerSpinner.getValue();
     }
 
     public void setResultText(String text) {
@@ -68,6 +56,13 @@ public abstract class GamePanel extends JPanel {
         imagePanel.repaint();
     }
 
+    public void updateWagerSpinner(int userScore) {
+        spinnerModel.setMaximum(userScore);
+        if((Integer)wagerSpinner.getValue() > (Integer)spinnerModel.getMaximum()) {
+            wagerSpinner.setValue(spinnerModel.getMaximum());
+        }
+    }
+
     protected abstract JPanel constructGamePanel();
 
     private JPanel constructWagerPanel() {
@@ -79,13 +74,17 @@ public abstract class GamePanel extends JPanel {
         JLabel amountLabel = new JLabel("Amount:");
 
         JPanel buttonsPanel = constructButtonsPanel();
-        wagerField = new WagerField();
-        wagerField.setSize(80, 50);
+
+        spinnerModel = new SpinnerNumberModel(0, 0, 1, 1);
+        wagerSpinner = new JSpinner(spinnerModel);
+
+        // wagerField = new WagerField();
+        // wagerField.setSize(80, 50);
 
         wagerPanel.add(wagerLabel);
         wagerPanel.add(buttonsPanel);
         wagerPanel.add(amountLabel);
-        wagerPanel.add(wagerField);
+        wagerPanel.add(wagerSpinner);
 
         return wagerPanel;
     }

@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -26,7 +28,9 @@ public class Controller {
         mainWindow.addCoinFlipActionListener(new GameButtonActionListener("FLIP"));
         mainWindow.addDiceRollActionListener(new GameButtonActionListener("ROLL"));
         mainWindow.addHelpButtonActionListener(new HelpButtonListener());
+        mainWindow.addTabChangeListener(new TabChangeListener());
         requestLeaderboardUpdate();
+        mainWindow.getCurrentPanel().updateWagerSpinner(user.getScore());
     }
 
     private void requestLeaderboardUpdate() {
@@ -131,6 +135,7 @@ public class Controller {
             if(scoreResponse[0].equals("SCORE")) {
                 user.setScore(Integer.parseInt(scoreResponse[1]));
                 mainWindow.setScoreText(user.getScore());
+                gamePanel.updateWagerSpinner(user.getScore());
             }
         }
     }
@@ -196,6 +201,14 @@ public class Controller {
                 JOptionPane.showMessageDialog(loginWindow,
                         "Account creation successful. Please log in.");
             }
+        }
+    }
+
+    public class TabChangeListener implements ChangeListener {
+        @Override
+        public void stateChanged(ChangeEvent e) {
+            GamePanel gamePanel = mainWindow.getCurrentPanel();
+            gamePanel.updateWagerSpinner(user.getScore());
         }
     }
 }
