@@ -32,7 +32,8 @@ public class Server {
                     socketList.add(serverThread);
                     thread.start();
                 } catch(SocketException e) {
-                    System.out.println("Acceptance of new connections interrupted due to server closure.");
+                    System.out.println("ERROR: SocketException (If you're seeing this while purposefully terminating" +
+                            "the server, disregard.)");
                 }
             }
         } catch(IOException e) {

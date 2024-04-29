@@ -84,24 +84,16 @@ public class MainWindow extends JFrame {
     private JPanel constructInfoPanel() {
         usernameText = new JLabel();
         scoreText = new JLabel();
-
-        JPanel jPanel = new JPanel();
-
-        JPanel subPanel = new JPanel();
-        subPanel.setLayout(new GridLayout(1,2));
-        subPanel.add(usernameText);
-        subPanel.add(scoreText);
-
-        Border lineBorder = BorderFactory.createLineBorder(Color.black);
-        Border emptyBorder = BorderFactory.createEmptyBorder(5,5,5,5);
-
-        subPanel.setSize(500, 50);
-        subPanel.setBorder(BorderFactory.createCompoundBorder(lineBorder, emptyBorder));
-
         logoutButton = new JButton("Log Out");
 
-        jPanel.add(subPanel);
+        JPanel jPanel = new JPanel();
+        jPanel.setLayout(new GridLayout(1,3));
+        jPanel.add(usernameText);
+        jPanel.add(scoreText);
         jPanel.add(logoutButton);
+
+        jPanel.setSize(500, 50);
+        jPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
         return jPanel;
     }
 
