@@ -32,7 +32,7 @@ public class Server {
                     socketList.add(serverThread);
                     thread.start();
                 } catch(SocketException e) {
-                    System.out.println("ERROR: SocketException (If you're seeing this while purposefully terminating" +
+                    System.out.println("ERROR: SocketException (If you're seeing this while purposefully terminating " +
                             "the server, disregard.)");
                 }
             }
@@ -46,7 +46,7 @@ public class Server {
             @Override
             public void run() {
                 for(ServerThread t : socketList) {
-                    t.close();
+                    if(t.isOpen()) t.close();
                 }
                 for(Thread t : threadList) {
                     try {

@@ -3,12 +3,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 
 public class ServerThread extends Server implements Runnable {
     private Socket clientSocket;
     private String currentUsername;
     private PrintWriter printWriter;
+    private boolean isOpen = true;
 
     public ServerThread(Socket clientSocket) {
         this.clientSocket = clientSocket;
@@ -23,9 +25,14 @@ public class ServerThread extends Server implements Runnable {
         printWriter.close();
         try {
             clientSocket.close();
+            isOpen = false;
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean isOpen() {
+        return isOpen;
     }
 
     @Override
@@ -41,8 +48,11 @@ public class ServerThread extends Server implements Runnable {
                 printWriter.println(response);
                 printWriter.flush();
             }
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        } catch (SocketException e) {
+            System.out.println("ERROR: SocketException (If you're seeing this while purposefully terminating " +
+                    "the server, disregard.)");
+        } catch (IOException e) {
+            e.printStackTrace();
         } finally {
             close();
         }
