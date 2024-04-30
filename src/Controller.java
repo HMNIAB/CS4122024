@@ -171,12 +171,13 @@ public class Controller {
     public class HelpButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            String helpString = String.format("HOW TO PLAY:\n" +
-                    "Use the wager panel on the left to bet points from your\n" +
-                    "current score (shown at top) on the outcome of the game.\n" +
-                    "You cannot bet more points than you have. When you're happy\n" +
-                    "with your wager, press the FLIP or ROLL button to play. Winning\n" +
-                    "will earn you your wager amount, +1 bonus point for winning.");
+            String helpString = """
+                    HOW TO PLAY:
+                    Use the wager panel on the left to bet points from your
+                    current score (shown at top) on the outcome of the game.
+                    You cannot bet more points than you have. When you're happy
+                    with your wager, press the FLIP or ROLL button to play. Winning
+                    will earn you your wager amount, +1 bonus point for winning.""";
             JOptionPane.showMessageDialog(mainWindow, helpString);
         }
     }

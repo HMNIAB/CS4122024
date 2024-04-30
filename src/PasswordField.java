@@ -13,7 +13,7 @@ public class PasswordField extends JPasswordField {
     public class PasswordDocument extends PlainDocument {
         @Override
         public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
-            str = str.replaceAll("\s", "");
+            str = str.replaceAll(" ", "");
             super.insertString(offs, str, a);
         }
     }

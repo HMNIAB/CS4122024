@@ -23,7 +23,7 @@ public class LoginManager {
     }
 
     public void logout(String username) {
-        if(userList.contains(username)) userList.remove(username);
+        userList.remove(username);
     }
 
     public boolean createAccount(String username, String password) {
