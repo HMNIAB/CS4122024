@@ -41,14 +41,14 @@ public class MainWindow extends JFrame {
         setVisible(true);
     }
 
-    // TODO: when logout button exists, toggle setEnabled along with jTabs. maybe disable window closing if possible?
-
     public void disableInput() {
         jTabs.setEnabled(false);
+        logoutButton.setEnabled(false);
     }
 
     public void enableInput() {
         jTabs.setEnabled(true);
+        logoutButton.setEnabled(true);
     }
 
     public GamePanel getCurrentPanel() {
