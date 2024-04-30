@@ -117,7 +117,7 @@ public class ServerThread extends Server implements Runnable {
 
     private String requestLeaderboardUpdate() {
         try {
-            LeaderboardUpdater leaderboardUpdater = new LeaderboardUpdater();
+            LeaderboardUpdater leaderboardUpdater = new LeaderboardUpdater(database);
             ArrayList<User> users = leaderboardUpdater.getTopThreePlayers();
             StringBuilder response = new StringBuilder("LEADERBOARD ");
             for(User u : users) {

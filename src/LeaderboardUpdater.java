@@ -6,8 +6,8 @@ import java.util.ArrayList;
 public class LeaderboardUpdater {
     private UserDatabase userDatabase;
 
-    public LeaderboardUpdater() {
-        userDatabase = new UserDatabase();
+    public LeaderboardUpdater(UserDatabase userDatabase) {
+        this.userDatabase = userDatabase;
     }
 
     public ArrayList<User> getTopThreePlayers() {
@@ -32,10 +32,6 @@ public class LeaderboardUpdater {
             e.printStackTrace();
         }
         return topThreePlayers;
-    }
-
-    public void close() {
-        userDatabase.close();
     }
 }
 

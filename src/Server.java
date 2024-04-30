@@ -56,6 +56,8 @@ public class Server {
                     }
                 }
                 try {
+                    database.close();
+                    System.out.println("Connection to database closed.");
                     server.close();
                     System.out.println("Server closed.");
                 } catch (IOException e) {
