@@ -52,12 +52,49 @@ public class Controller {
         exit(1);
     }
 
+    private void showErrorDialog() {
+        JOptionPane.showMessageDialog(null, "An unexpected error occurred. " +
+                "Please try your request again.");
+    }
+
+    private void triggerAnimation(String command, AnimationPlayer animationPlayer) {
+        switch(command) {
+            case "HEADS":
+                animationPlayer.play(CoinImage.HEADS);
+                break;
+            case "TAILS":
+                animationPlayer.play(CoinImage.TAILS);
+                break;
+            case "1":
+                animationPlayer.play(DiceImage.ONE);
+                break;
+            case "2":
+                animationPlayer.play(DiceImage.TWO);
+                break;
+            case "3":
+                animationPlayer.play(DiceImage.THREE);
+                break;
+            case "4":
+                animationPlayer.play(DiceImage.FOUR);
+                break;
+            case "5":
+                animationPlayer.play(DiceImage.FIVE);
+                break;
+            case "6":
+                animationPlayer.play(DiceImage.SIX);
+                break;
+            default:
+                showErrorDialog();
+        }
+    }
+
     public class GameButtonActionListener implements ActionListener {
         private String command;
         private String response;
         private int wager;
         private ButtonModel call;
         private GamePanel gamePanel;
+        private AnimationPlayer animationPlayer;
 
         public GameButtonActionListener(String command) {
             super();
@@ -67,6 +104,7 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             gamePanel = mainWindow.getCurrentPanel();
+            animationPlayer = new AnimationPlayer(gamePanel, this);
             wager = gamePanel.getWagerAmount();
             call = gamePanel.getCall();
 
@@ -86,37 +124,7 @@ public class Controller {
             mainWindow.disableInput();
             gamePanel.disableInput();
 
-            triggerAnimation();
-        }
-
-        private void triggerAnimation() {
-            AnimationPlayer animationPlayer = new AnimationPlayer(gamePanel, this);
-            switch(response) {
-                case "HEADS":
-                    animationPlayer.play(CoinImage.HEADS);
-                    break;
-                case "TAILS":
-                    animationPlayer.play(CoinImage.TAILS);
-                    break;
-                case "1":
-                    animationPlayer.play(DiceImage.ONE);
-                    break;
-                case "2":
-                    animationPlayer.play(DiceImage.TWO);
-                    break;
-                case "3":
-                    animationPlayer.play(DiceImage.THREE);
-                    break;
-                case "4":
-                    animationPlayer.play(DiceImage.FOUR);
-                    break;
-                case "5":
-                    animationPlayer.play(DiceImage.FIVE);
-                    break;
-                case "6":
-                    animationPlayer.play(DiceImage.SIX);
-                    break;
-            }
+            triggerAnimation(response, animationPlayer);
         }
 
         public void resumeAfterAnimation() {
@@ -124,11 +132,9 @@ public class Controller {
 
             requestScoreUpdate(response);
             response = clientNetwork.getResponse();
-
             updateLocalScore(response);
 
             requestLeaderboardUpdate();
-
             mainWindow.enableInput();
             gamePanel.enableInput();
         }
@@ -149,6 +155,8 @@ public class Controller {
                 user.setScore(Integer.parseInt(scoreResponse[1]));
                 mainWindow.setScoreText(user.getScore());
                 gamePanel.updateWagerSpinner(user.getScore());
+            } else {
+                showErrorDialog();
             }
         }
     }
@@ -185,11 +193,15 @@ public class Controller {
                         "Login failed. Please try again, log out elsewhere, or create a new account.");
             } else {
                 String[] userInfo = response.split(" ");
-                String username = userInfo[1];
-                int score = Integer.parseInt(userInfo[2]);
-                user = new User(username, null, score);
-                loginWindow.setVisible(false);
-                createGameWindow();
+                if(userInfo[0].equals("TRUE")) {
+                    String username = userInfo[1];
+                    int score = Integer.parseInt(userInfo[2]);
+                    user = new User(username, null, score);
+                    loginWindow.setVisible(false);
+                    createGameWindow();
+                } else {
+                    showErrorDialog();
+                }
             }
         }
     }
@@ -198,7 +210,12 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             clientNetwork.sendRequest("LOGOUT " + user.getUsername());
-            mainWindow.dispose();
+            String response = clientNetwork.getResponse();
+            if(response.equals("LOGOUT_SUCCESS")) {
+                mainWindow.dispose();
+            } else {
+                showErrorDialog();
+            }
         }
     }
 
@@ -219,9 +236,11 @@ public class Controller {
             if(response.equals("FALSE")) {
                 JOptionPane.showMessageDialog(loginWindow,
                         "Account creation failed. Maybe username is already taken?");
-            } else {
+            } else if(response.equals("TRUE")) {
                 JOptionPane.showMessageDialog(loginWindow,
                         "Account creation successful. Please log in.");
+            } else {
+                showErrorDialog();
             }
         }
     }
