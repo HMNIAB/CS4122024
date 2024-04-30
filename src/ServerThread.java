@@ -37,73 +37,96 @@ public class ServerThread extends Server implements Runnable {
 
             String input;
             while(!clientSocket.isClosed() && (input = bufferedReader.readLine()) != null) {
-                String response;
-                if(input.equals("FLIP")) {
-                    response = CoinFlipGame.flipCoin();
-                } else if(input.equals("ROLL")) {
-                    response = DiceRollGame.rollDice();
-                } else if(input.equals("LEADERBOARD")) {
-                    response = requestLeaderboardUpdate();
-                } else {
-                    String[] splitInput = input.split(" ");
-                    response = parseLongInput(splitInput);
-                }
+                String response = handleInput(input);
                 printWriter.println(response);
                 printWriter.flush();
             }
-            if(currentUsername != null) loginManager.logout(currentUsername);
-            System.out.println("Disconnecting from client " + clientSocket);
-            clientSocket.close();
-
         } catch (IOException ex) {
             ex.printStackTrace();
+        } finally {
+            close();
         }
+    }
 
+    private String handleInput(String input) {
+        try {
+            if(input.equals("FLIP")) {
+                return CoinFlipGame.flipCoin();
+            } else if(input.equals("ROLL")) {
+                return DiceRollGame.rollDice();
+            } else if(input.equals("LEADERBOARD")) {
+                return requestLeaderboardUpdate();
+            } else {
+                String[] splitInput = input.split(" ");
+                return parseLongInput(splitInput);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "ERROR: An unexpected error occurred.";
+        }
     }
 
     private String parseLongInput(String[] splitInput) {
-        switch(splitInput[0]) {
-            case "LOGIN":
-                User user = loginManager.login(splitInput[1], splitInput[2]);
-                if(user != null) {
-                    currentUsername = user.getUsername();
-                    return ("TRUE " + user);
-                }
-                else return "FALSE";
-            case "LOGOUT":
-                loginManager.logout(splitInput[1]);
-                return null;
-            case "CREATE":
-                if(loginManager.createAccount(splitInput[1], splitInput[2]))
-                    return "TRUE";
-                else return "FALSE";
-            case "ADD":
-                String username = splitInput[1];
-                int change = 1 + Integer.parseInt(splitInput[2]);
-                return requestScoreUpdate(username, change);
-            case "LOSE":
-                username = splitInput[1];
-                change = -1 * (Integer.parseInt(splitInput[2]));
-                return requestScoreUpdate(username, change);
-            default:
-                return "INVALID";
+        try {
+            switch(splitInput[0]) {
+                case "LOGIN":
+                    User user = loginManager.login(splitInput[1], splitInput[2]);
+                    if(user != null) {
+                        currentUsername = user.getUsername();
+                        return ("TRUE " + user);
+                    } else {
+                        return "FALSE: Incorrect username or password.";
+                    }
+                case "LOGOUT":
+                    loginManager.logout(splitInput[1]);
+                    return "LOGOUT_SUCCESS";
+                case "CREATE":
+                    if(loginManager.createAccount(splitInput[1], splitInput[2])) {
+                        return "TRUE: Account created successfully.";
+                    } else {
+                        return "FALSE: Username already exists.";
+                    }
+                case "ADD":
+                    String username = splitInput[1];
+                    int change = 1 + Integer.parseInt(splitInput[2]);
+                    return requestScoreUpdate(username, change);
+                case "LOSE":
+                    username = splitInput[1];
+                    change = -1 * (Integer.parseInt(splitInput[2]));
+                    return requestScoreUpdate(username, change);
+                default:
+                    return "INVALID: Invalid command.";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "ERROR: An unexpected error occurred.";
         }
     }
 
     private String requestScoreUpdate(String username, int change) {
-        User user = database.getUser(username);
-        int newScore = user.getScore() + change;
-        database.updateScore(username, newScore);
-        return String.format("SCORE " + newScore);
+        try {
+            User user = database.getUser(username);
+            int newScore = user.getScore() + change;
+            database.updateScore(username, newScore);
+            return String.format("SCORE %d", newScore);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "ERROR: An unexpected error occurred.";
+        }
     }
 
     private String requestLeaderboardUpdate() {
-        LeaderboardUpdater leaderboardUpdater = new LeaderboardUpdater();
-        ArrayList<User> users = leaderboardUpdater.getTopThreePlayers();
-        StringBuilder response = new StringBuilder("LEADERBOARD ");
-        for(User u : users) {
-            response.append(u).append(",");
+        try {
+            LeaderboardUpdater leaderboardUpdater = new LeaderboardUpdater();
+            ArrayList<User> users = leaderboardUpdater.getTopThreePlayers();
+            StringBuilder response = new StringBuilder("LEADERBOARD ");
+            for(User u : users) {
+                response.append(u).append(",");
+            }
+            return response.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "ERROR: An unexpected error occurred.";
         }
-        return response.toString();
     }
 }
