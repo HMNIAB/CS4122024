@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.net.ConnectException;
 
 import static java.lang.System.exit;
 
@@ -15,8 +16,14 @@ public class Controller {
     private User user;
 
     public Controller() {
-        clientNetwork = new ClientNetwork(this);
-        createLoginWindow();
+        try {
+            clientNetwork = new ClientNetwork(this);
+            createLoginWindow();
+        } catch (ConnectException e) {
+            JOptionPane.showMessageDialog(null, "Couldn't connect to the server. The game cannot " +
+                    "be played without a connection.\n" +
+                    "The game will now close. If the problem persists, the server may be down. Please try again later.");
+        }
     }
 
     private void createLoginWindow() {

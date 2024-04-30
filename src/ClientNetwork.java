@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.ConnectException;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
@@ -13,7 +14,7 @@ public class ClientNetwork {
     private InputStreamReader inputStreamReader;
     private BufferedReader bufferedReader;
 
-    public ClientNetwork(Controller controller) {
+    public ClientNetwork(Controller controller) throws ConnectException {
         this.controller = controller;
         try {
             socket = new Socket("127.0.0.1", 5000);
@@ -22,10 +23,12 @@ public class ClientNetwork {
             inputStreamReader = new InputStreamReader(socket.getInputStream());
             bufferedReader = new BufferedReader(inputStreamReader);
             printWriter = new PrintWriter(socket.getOutputStream());
-        } catch (UnknownHostException ex) {
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        } catch (ConnectException e) {
+            throw new ConnectException();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
