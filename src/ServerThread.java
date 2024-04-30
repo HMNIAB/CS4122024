@@ -62,7 +62,7 @@ public class ServerThread extends Server implements Runnable {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return "ERROR: An unexpected error occurred.";
+            return "ERROR";
         }
     }
 
@@ -75,16 +75,16 @@ public class ServerThread extends Server implements Runnable {
                         currentUsername = user.getUsername();
                         return ("TRUE " + user);
                     } else {
-                        return "FALSE: Incorrect username or password.";
+                        return "FALSE";
                     }
                 case "LOGOUT":
                     loginManager.logout(splitInput[1]);
                     return "LOGOUT_SUCCESS";
                 case "CREATE":
                     if(loginManager.createAccount(splitInput[1], splitInput[2])) {
-                        return "TRUE: Account created successfully.";
+                        return "TRUE";
                     } else {
-                        return "FALSE: Username already exists.";
+                        return "FALSE";
                     }
                 case "ADD":
                     String username = splitInput[1];
@@ -95,11 +95,11 @@ public class ServerThread extends Server implements Runnable {
                     change = -1 * (Integer.parseInt(splitInput[2]));
                     return requestScoreUpdate(username, change);
                 default:
-                    return "INVALID: Invalid command.";
+                    return "INVALID";
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return "ERROR: An unexpected error occurred.";
+            return "ERROR";
         }
     }
 
@@ -111,7 +111,7 @@ public class ServerThread extends Server implements Runnable {
             return String.format("SCORE %d", newScore);
         } catch (Exception e) {
             e.printStackTrace();
-            return "ERROR: An unexpected error occurred.";
+            return "ERROR";
         }
     }
 
@@ -126,7 +126,7 @@ public class ServerThread extends Server implements Runnable {
             return response.toString();
         } catch (Exception e) {
             e.printStackTrace();
-            return "ERROR: An unexpected error occurred.";
+            return "ERROR";
         }
     }
 }
