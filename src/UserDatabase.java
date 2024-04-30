@@ -4,13 +4,9 @@ public class UserDatabase {
 
     private Connection connection;
 
-    // Constructor
     public UserDatabase() {
         try {
-            // Connect to the SQLite database
             connection = DriverManager.getConnection("jdbc:sqlite:accountinfo.db");
-
-            // Create a table (if not exists)
             createTable();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -21,7 +17,6 @@ public class UserDatabase {
         return connection;
     }
 
-    // Method to create a table
     private void createTable() {
         String createTableSQL = "CREATE TABLE IF NOT EXISTS users (" +
                                 "username TEXT PRIMARY KEY," +
@@ -36,7 +31,6 @@ public class UserDatabase {
         }
     }
 
-    // Method to insert a user
     public void insertUser(String username, String password, int score) {
         String insertSQL = "INSERT INTO users (username, password, score) VALUES (?, ?, ?)";
         try {
@@ -70,7 +64,7 @@ public class UserDatabase {
         return exists;
     }
 
-    // Method to retrieve a user by username
+    // should be used only where a username should have already been validated with userExists()
     public User getUser(String username) {
         User user = null;
         String selectSQL = "SELECT * FROM users WHERE username = ?";
@@ -91,7 +85,6 @@ public class UserDatabase {
         return user;
     }
 
-    // Method to update a user's score
     public void updateScore(String username, int newScore) {
         String updateSQL = "UPDATE users SET score = ? WHERE username = ?";
         try {
@@ -104,7 +97,7 @@ public class UserDatabase {
             e.printStackTrace();
         }
     }
-    // Method to close the database connection
+
     public void close() {
         try {
             if (connection != null)
